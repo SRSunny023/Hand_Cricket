@@ -4,6 +4,7 @@
 
 #include "menu.h"
 #include "loginSystem.h"
+#include "matchEngine.h"
 
 using namespace std;
 
@@ -37,6 +38,14 @@ void exhibitionMenu(){
     int ball = 0;
 
     int tossResult = 0;
+
+    bool userTeamFlag = false;
+
+    bool aiTeamFlag = false;
+
+    bool ballFlag = false;
+
+    bool tossResultFlag = false;
     
     while(true){
 
@@ -55,9 +64,11 @@ void exhibitionMenu(){
         cout << "|                                                                          |\n";
         cout << "| 5. Start The Match                                                       |\n";
         cout << "|                                                                          |\n";
-        cout << "| 6. Back                                                                  |\n";
+        cout << "| 6. Reset (1 - 4)                                                         |\n";
         cout << "|                                                                          |\n";
-        cout << "| 7. Exit                                                                  |\n";
+        cout << "| 7. Back                                                                  |\n";
+        cout << "|                                                                          |\n";
+        cout << "| 8. Exit                                                                  |\n";
         cout << "|                                                                          |\n";
         cout << "----------------------------------------------------------------------------\n";
 
@@ -65,212 +76,256 @@ void exhibitionMenu(){
 
         if(choice == 1){
 
-            int over;
+            if(ballFlag == false){
+
+                int over;
             
-            do{
+                do{
                 
-                clearScreen();
-                
-                over = getIntInput("Enter The Over (5 - 10): ");
-
-                if(over<5 || over>10){
-
                     clearScreen();
+                
+                    over = getIntInput("Enter The Over (5 - 10): ");
 
-                    cout << "Invalid Input! Choose Between (1 - 5)!\n";
+                    if(over<5 || over>10){
 
-                    pressToContinue();
+                        clearScreen();
 
-                }
+                        cout << "Invalid Input! Choose Between (1 - 5)!\n";
 
-            }   while(over<5 || over>10);
+                        pressToContinue();
 
-            clearScreen();
+                    }
 
-            ball = over*6;
+                }   while(over<5 || over>10);
 
-            cout << "Over Selection Done. Now You Will Play Match In " << over << " Overs\n";
+                clearScreen();
 
-            cout << "Loading...\n";
+                ball = over*6;
 
-            pressToContinue();
+                cout << "Over Selection Done. Now You Will Play Match In " << over << " Overs\n";
+
+                cout << "Loading...\n";
+
+                pressToContinue();
+
+                ballFlag = true;
+
+            }
+
+            else{
+
+                clearScreen();
+
+                cout << "You Already Done Choosing Over!\n";
+
+                pressToContinue();
+
+            }
 
         }
 
         else if(choice == 2){
 
-            int teamChoice;
+            if(userTeamFlag == false){
+
+                int teamChoice;
             
-            do{
-
-                clearScreen();
-
-                cout << "----------------------------------------------------------------------------\n";
-                cout << "|                         User Team Selection Menu                         |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 1.  Afghanistan                                                          |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 2.  Australia                                                            |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 3.  Bangladesh                                                           |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 4.  England                                                              |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 5.  India                                                                |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 6.  Ireland                                                              |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 7.  New Zealand                                                          |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 8.  Pakistan                                                             |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 9.  South Africa                                                         |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 10. Sri Lanka                                                            |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 11. West Indies                                                          |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 12. Zimbabwe                                                             |\n";
-                cout << "|                                                                          |\n";
-                cout << "----------------------------------------------------------------------------\n";
-
-                teamChoice = getIntInput("Enter Your Choice: ");
-
-                if(teamChoice < 1 || teamChoice > 12){
+                do{
 
                     clearScreen();
 
-                    cout << "Wrong Input! Choose Between (1 - 12)!\n";
+                    cout << "----------------------------------------------------------------------------\n";
+                    cout << "|                         User Team Selection Menu                         |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 1.  Afghanistan                                                          |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 2.  Australia                                                            |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 3.  Bangladesh                                                           |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 4.  England                                                              |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 5.  India                                                                |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 6.  Ireland                                                              |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 7.  New Zealand                                                          |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 8.  Pakistan                                                             |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 9.  South Africa                                                         |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 10. Sri Lanka                                                            |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 11. West Indies                                                          |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 12. Zimbabwe                                                             |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "----------------------------------------------------------------------------\n";
 
-                    pressToContinue();
+                    teamChoice = getIntInput("Enter Your Choice: ");
 
-                }
+                    if(teamChoice < 1 || teamChoice > 12){
+
+                        clearScreen();
+
+                        cout << "Wrong Input! Choose Between (1 - 12)!\n";
+
+                        pressToContinue();
+
+                    }
+
+                    if(team[teamChoice-1] == aiTeam){
+
+                        clearScreen();
+
+                        cout << team[teamChoice-1] << " Already Selected For AI Team So Can't Choose!\n";
+
+                        teamChoice = 0;
+
+                        pressToContinue();
+
+                    }
 
 
-            } while(teamChoice < 1 || teamChoice > 12);
+                } while(teamChoice < 1 || teamChoice > 12);
 
-            clearScreen();
+                clearScreen();
 
-            userTeam = team[teamChoice-1];
+                userTeam = team[teamChoice-1];
 
-            cout << "Team Selection Done!\n\nYour Team: " << userTeam << " \n\n";
+                cout << "Team Selection Done!\n\nYour Team: " << userTeam << " \n\n";
 
-            pressToContinue();
+                pressToContinue();
+
+                userTeamFlag = true;
+
+            }
+
+            else{
+
+                clearScreen();
+
+                cout << "You Already Selected Your Team!\n";
+
+                pressToContinue();
+
+            }
 
         }
 
         else if(choice == 3){
 
-            int teamChoice;
+            if(aiTeamFlag == false){
+
+                int teamChoice;
             
-            do{
-
-                clearScreen();
-
-                cout << "----------------------------------------------------------------------------\n";
-                cout << "|                        AI Team Selection Menu                            |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 1.  Afghanistan                                                          |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 2.  Australia                                                            |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 3.  Bangladesh                                                           |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 4.  England                                                              |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 5.  India                                                                |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 6.  Ireland                                                              |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 7.  New Zealand                                                          |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 8.  Pakistan                                                             |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 9.  South Africa                                                         |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 10. Sri Lanka                                                            |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 11. West Indies                                                          |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 12. Zimbabwe                                                             |\n";
-                cout << "|                                                                          |\n";
-                cout << "----------------------------------------------------------------------------\n";
-
-                teamChoice = getIntInput("Enter Your Choice: ");
-
-                if(teamChoice < 1 || teamChoice > 12){
+                do{
 
                     clearScreen();
 
-                    cout << "Wrong Input! Choose Between (1 - 12)!\n";
+                    cout << "----------------------------------------------------------------------------\n";
+                    cout << "|                        AI Team Selection Menu                            |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 1.  Afghanistan                                                          |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 2.  Australia                                                            |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 3.  Bangladesh                                                           |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 4.  England                                                              |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 5.  India                                                                |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 6.  Ireland                                                              |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 7.  New Zealand                                                          |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 8.  Pakistan                                                             |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 9.  South Africa                                                         |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 10. Sri Lanka                                                            |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 11. West Indies                                                          |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 12. Zimbabwe                                                             |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "----------------------------------------------------------------------------\n";
 
-                    pressToContinue();
+                    teamChoice = getIntInput("Enter Your Choice: ");
 
-                }
+                    if(teamChoice < 1 || teamChoice > 12){
+
+                        clearScreen();
+
+                        cout << "Wrong Input! Choose Between (1 - 12)!\n";
+
+                        pressToContinue();
+
+                    }
+
+                    if(team[teamChoice-1] == userTeam){
+
+                        clearScreen();
+
+                        cout << team[teamChoice-1] << " Already Selected For User Team So Can't Choose!\n";
+
+                        teamChoice = 0;
+
+                        pressToContinue();
+
+                    }
 
 
-            } while(teamChoice < 1 || teamChoice > 12);
+                } while(teamChoice < 1 || teamChoice > 12);
 
-            clearScreen();
+                clearScreen();
 
-            aiTeam = team[teamChoice-1];
+                aiTeam = team[teamChoice-1];
 
-            cout << "Team Selection Done!\n\nAI Team: " << userTeam << " \n\n";
+                cout << "Team Selection Done!\n\nAI Team: " << aiTeam << " \n\n";
 
-            pressToContinue();
+                pressToContinue();
+
+                aiTeamFlag = true;
+
+            }
+
+            else{
+
+                clearScreen();
+
+                cout << "You Already Selected AI Team!\n";
+
+                pressToContinue();
+
+            }
 
         }
 
         else if(choice == 4){
 
-            int toss;
+            if(tossResultFlag == false){
 
-            do{
-
-                clearScreen();
-
-                cout << "----------------------------------------------------------------------------\n";
-                cout << "|                        Toss Selection Menu                               |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 1. Head                                                                  |\n";
-                cout << "|                                                                          |\n";
-                cout << "| 2. Tail                                                                  |\n";
-                cout << "|                                                                          |\n";
-                cout << "----------------------------------------------------------------------------\n";
-
-                toss = getIntInput("Enter Your Choice: ");
-
-                if(toss < 1 || toss > 2){
-
-                    clearScreen();
-
-                    cout << "Wrong Input! Choose Between (1 - 2)!\n";
-
-                    pressToContinue();
-
-                }
-
-            }   while(toss < 1 || toss > 2);
-
-            clearScreen();
-
-            int aiToss = rand()%2 + 1;
-
-            if(toss==aiToss){
-
-                int userTossChoose;
+                int toss;
 
                 do{
 
                     clearScreen();
-                    
-                    cout << "Congrats! You Won The Toss! Choose Which One First You Want To Do\n\n";
 
-                    cout << "1. Bat\n\n2. Bowl\n\n";
+                    cout << "----------------------------------------------------------------------------\n";
+                    cout << "|                        Toss Selection Menu                               |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 1. Head                                                                  |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 2. Tail                                                                  |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "----------------------------------------------------------------------------\n";
 
-                    userTossChoose = getIntInput("Enter Your Choice (1 - 2): ");
+                    toss = getIntInput("Enter Your Choice: ");
 
-                    if(userTossChoose<1 || userTossChoose>2){
+                    if(toss < 1 || toss > 2){
 
                         clearScreen();
 
@@ -280,48 +335,91 @@ void exhibitionMenu(){
 
                     }
 
-                }   while(userTossChoose<1 || userTossChoose>2);
-
-                tossResult = userTossChoose;
+                }   while(toss < 1 || toss > 2);
 
                 clearScreen();
 
-                if(tossResult==1){
+                tossResultFlag = true;
 
-                    cout << "You Won The Toss And Elected To Bat First!\n";
+                int aiToss = rand()%2 + 1;
 
+                if(toss==aiToss){
+
+                    int userTossChoose;
+
+                    do{
+
+                        clearScreen();
+                    
+                        cout << "Congrats! You Won The Toss! Choose Which One First You Want To Do\n\n";
+
+                        cout << "1. Bat\n\n2. Bowl\n\n";
+
+                        userTossChoose = getIntInput("Enter Your Choice (1 - 2): ");
+
+                        if(userTossChoose<1 || userTossChoose>2){
+
+                            clearScreen();
+
+                            cout << "Wrong Input! Choose Between (1 - 2)!\n";
+
+                            pressToContinue();
+
+                        }
+
+                    }   while(userTossChoose<1 || userTossChoose>2);
+
+                    tossResult = userTossChoose;
+
+                    clearScreen();
+
+                    if(tossResult==1){
+
+                        cout << "You Won The Toss And Elected To Bat First!\n";
+
+                    }
+
+                    else{
+
+                        cout << "You Won The Toss And Elected To Bowl First!\n";
+
+                    }
+
+                    pressToContinue();
 
                 }
 
                 else{
 
-                    cout << "You Won The Toss And Elected To Bowl First!\n";
+                    int aiTossChoose = rand()%2 + 1;
+
+                    tossResult = aiTossChoose - 1;
+
+                    clearScreen();
+
+                    if(tossResult==1){
+
+                        cout << "You Lost The Toss! You Have To Bat First!\n";
+
+                    }
+
+                    else{
+
+                        cout << "You Lost The Toss! You Have To Bowl First!\n";
+
+                    }
+
+                    pressToContinue();
 
                 }
-
-                pressToContinue();
 
             }
 
             else{
 
-                int aiTossChoose = rand()%2 + 1;
-
-                tossResult = aiTossChoose - 1;
-
                 clearScreen();
 
-                if(tossResult==1){
-
-                    cout << "You Lost The Toss! You Have To Bat First!\n";
-
-                }
-
-                else{
-
-                    cout << "You Lost The Toss! You Have To Bowl First!\n";
-
-                }
+                cout << "You Already Done Toss!\n";
 
                 pressToContinue();
 
@@ -331,17 +429,71 @@ void exhibitionMenu(){
 
         else if(choice == 5){
 
+            if(userTeam == "" || aiTeam == "" || ball == 0 || tossResult == 0){
 
+                cout << "First Complete 1 - 4 step";
+
+                pressToContinue();
+
+            }
+
+            else{
+
+                startMatch(userTeam,aiTeam,ball,tossResult);
+
+                userTeamFlag = false;
+
+                aiTeamFlag = false;
+
+                ballFlag = false;
+
+                tossResultFlag = false;
+
+                userTeam = "";
+
+                aiTeam = "";
+
+                ball = 0;
+
+                tossResult = 0;
+
+            }
 
         }
 
         else if(choice == 6){
 
-            return;
+            clearScreen();
+
+            userTeamFlag = false;
+
+            aiTeamFlag = false;
+
+            ballFlag = false;
+
+            tossResultFlag = false;
+
+            userTeam = "";
+
+            aiTeam = "";
+
+            ball = 0;
+
+            tossResult = 0;
+
+            cout << "1 - 4 (Section) Resetted Successfully!\n";
+
+            pressToContinue();
 
         }
 
         else if(choice == 7){
+
+            return;
+
+        }
+
+        else if(choice == 8){
 
             clearScreen();
 
@@ -355,7 +507,7 @@ void exhibitionMenu(){
 
             clearScreen();
 
-            cout << "Invalid Input! Choose Between (1 - 7)!\n";
+            cout << "Invalid Input! Choose Between (1 - 8)!\n";
 
             pressToContinue();
 
