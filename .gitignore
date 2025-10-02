@@ -1,1 +1,4 @@
 .vscode
+output
+tournament.cpp
+tournamentWithT20WC.cpp

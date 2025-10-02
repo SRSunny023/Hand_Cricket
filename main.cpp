@@ -1,5 +1,18 @@
 #include <iostream>
+#include <string>
+#include <vector>
+
+#include "loginSystem.h"
+
+using namespace std;
+
 
 int main(){
-    std::cout << "Hello World"; // Scop resulation operator ar kaj ki?
+
+    srand(time(NULL));
+    
+    account_menu();
+
+    return 0;
+
 }
