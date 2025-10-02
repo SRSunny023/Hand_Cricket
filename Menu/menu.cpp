@@ -5,8 +5,179 @@
 #include "menu.h"
 #include "loginSystem.h"
 #include "matchEngine.h"
+#include "../Tournament/Asia_Cup_2025/asiaCup2025.h"
+#include "tournamentEngine.h"
+#include <iomanip>
 
 using namespace std;
+
+
+
+
+void tournamentMenu(){
+
+    int teamChoice;
+
+    string asiaCupTeam[] = {
+                "Afghanistan",
+                "Bangladesh",
+                "HongKong",
+                "India",
+                "Oman",
+                "Pakistan",
+                "SriLanka",
+                "UAE",
+    };
+
+    string userTeam = "";
+    
+    while(true){
+
+        clearScreen();
+
+        cout << "----------------------------------------------------------------------------\n";
+        cout << "|                           Tournament Menu                                |\n";
+        cout << "|                                                                          |\n";
+        cout << "| 1. Asia Cup 2025                                                         |\n";
+        cout << "|                                                                          |\n";
+        cout << "| 2. Champions Trophy 2025                                                 |\n";
+        cout << "|                                                                          |\n";
+        cout << "| 3. ODI World Cup 2023                                                    |\n";
+        cout << "|                                                                          |\n";
+        cout << "| 4. T20 World Cup 2024                                                    |\n";
+        cout << "|                                                                          |\n";
+        cout << "| 5. Reset Team                                                            |\n";
+        cout << "|                                                                          |\n";
+        cout << "| 6. Back                                                                  |\n";
+        cout << "|                                                                          |\n";
+        cout << "| 7. Exit                                                                  |\n";
+        cout << "|                                                                          |\n";
+        cout << "----------------------------------------------------------------------------\n";
+
+        int choice = getIntInput("Enter Your Choice: ");
+
+        if(choice == 1){
+            
+            clearScreen();
+
+            if(userTeam == ""){
+
+                do{
+
+                    clearScreen();
+
+                    cout << "----------------------------------------------------------------------------\n";
+                    cout << "|                    Asia Cup 2025 Team Selection                          |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 1. Afghanistan                                                           |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 2. Bangladesh                                                            |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 3. Hong Kong                                                             |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 4. India                                                                 |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 5. Oman                                                                  |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 6. Pakistan                                                              |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 7. Sri Lanka                                                             |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "| 8. United Arab Emirates                                                  |\n";
+                    cout << "|                                                                          |\n";
+                    cout << "----------------------------------------------------------------------------\n";
+
+                    teamChoice = getIntInput("Enter Your Choice: ");
+
+                    if(teamChoice < 1 || teamChoice > 8){
+
+                        clearScreen();
+
+                        cout << "Wrong Input! Choose Between (1 - 8)!\n";
+
+                        pressToContinue();
+
+                    }
+
+                }   while(teamChoice < 1 || teamChoice > 8);
+
+                userTeam = asiaCupTeam[teamChoice - 1];
+
+            }
+
+            asiaCupMenu(userTeam);
+
+        }
+
+        else if(choice == 2){
+
+            clearScreen();
+
+            cout << "Champions Trophy 2025 Under Development!\n";
+
+            pressToContinue();
+
+        }
+
+        else if(choice == 3){
+
+            clearScreen();
+
+            cout << "ODI World Cup 2023 Under Development!\n";
+
+            pressToContinue();
+
+        }
+
+        else if(choice == 4){
+
+            clearScreen();
+
+            cout << "T20 World Cup 2024 Under Development!\n";
+
+            pressToContinue();
+
+        }
+
+        else if(choice == 5){
+
+            userTeam = "";
+
+            cout << "Team Resetted!\n";
+
+            pressToContinue();
+
+        }
+
+        else if(choice == 6){
+
+            return;
+
+        }
+
+        else if(choice == 7){
+
+            clearScreen();
+
+            cout << "Program Exitted!\n";
+
+            exit(0);
+
+        }
+
+        else{
+
+            clearScreen();
+            
+            cout << "Wrong Input! Choose Between (1 - 7)!\n";
+
+            pressToContinue();
+
+        }
+
+    }
+
+}
 
 
 
@@ -559,9 +730,7 @@ void playMenu(){
 
             clearScreen();
 
-            cout << "Tournament Under Development!\n";
-
-            pressToContinue();
+            tournamentMenu();
 
         }
 

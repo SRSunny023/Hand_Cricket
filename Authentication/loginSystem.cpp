@@ -4,13 +4,15 @@
 #include <fstream>
 #include <limits>
 
+using namespace std;
 
 
 
 
 
-const string fileName = "userManual.txt";   // Account Details Holding File
-const string sessionFile = "session.txt";   // Session Login or Logged Out Detection File
+
+const string fileName = "Database/userManual.txt";   // Account Details Holding File
+const string sessionFile = "Database/session.txt";   // Session Login or Logged Out Detection File
 
 void account_menu();
 
