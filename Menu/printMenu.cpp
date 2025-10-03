@@ -264,6 +264,10 @@ void printAccountMenu(){
     cout << "|                                                                          |\n";
     cout << "|  5. Exit                                                                 |\n";
     cout << "|                                                                          |\n";
+    cout << "|  Remember Input * Anywhere In This Game Means Directly Exit The Game     |\n";
+    cout << "|                                                                          |\n";
+    cout << "|  Remember Input / Anywhere In This Game Means Go Back                    |\n";
+    cout << "|                                                                          |\n";
     cout << "----------------------------------------------------------------------------\n";
 
 }
@@ -288,13 +292,15 @@ void printUserMenu(){
     cout << "|                                                                          |\n";
     cout << "| 2. View Profile                                                          |\n";
     cout << "|                                                                          |\n";
-    cout << "| 3. Change Password                                                       |\n";
+    cout << "| 3. History                                                               |\n";
     cout << "|                                                                          |\n";
-    cout << "| 4. History                                                               |\n";
+    cout << "| 4. Logout                                                                |\n";
     cout << "|                                                                          |\n";
-    cout << "| 5. Logout                                                                |\n";
+    cout << "| 5. Exit                                                                  |\n";
     cout << "|                                                                          |\n";
-    cout << "| 6. Exit                                                                  |\n";
+    cout << "|  Remember Input * Anywhere In This Game Means Directly Exit The Game     |\n";
+    cout << "|                                                                          |\n";
+    cout << "|  Remember Input / Anywhere In This Game Means Go Back                    |\n";
     cout << "|                                                                          |\n";
     cout << "----------------------------------------------------------------------------\n";
 

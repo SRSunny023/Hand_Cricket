@@ -110,7 +110,7 @@ int batTournament(string userTeam, string aiTeam, int ball){
 
             clearScreen();
 
-            scoreCard(userScore, userWicket, temporaryBall, target, userTeam);
+            scoreCard(userScore, userWicket, temporaryBall, target, userTeam, ball);
 
             if(userWicket == 10){
 
@@ -132,9 +132,9 @@ int batTournament(string userTeam, string aiTeam, int ball){
 
             cout << bowlVariation[aiBowl] << " Delivary Incoming With " << bowlSpeed << " Speed" << " \n\n";
 
-            cout << "Batting Choice:\n\n\n1. LoftShot\n2. StrikeShot\n3. RotateShot\n4. Defend\n";
+            cout << "Batting Choice:\n\n1. LoftShot\n2. StrikeShot\n3. RotateShot\n4. Defend\n";
 
-            cout << "5. Exit The Game!\n\n\n";
+            cout << "5. Exit The Game!\n\n";
 
             batChoice = getIntInput("Enter Your Choice: ");
 
@@ -186,7 +186,7 @@ int batTournament(string userTeam, string aiTeam, int ball){
 
             clearScreen();
 
-            scoreCard(userScore, userWicket, temporaryBall, target, userTeam);
+            scoreCard(userScore, userWicket, temporaryBall, target, userTeam, ball);
 
             if(userWicket == 10){
 
@@ -218,9 +218,9 @@ int batTournament(string userTeam, string aiTeam, int ball){
 
             cout << bowlVariation[aiBowl] << " Delivary Incoming With " << bowlSpeed << " Speed" << " \n\n";
 
-            cout << "Batting Choice:\n\n\n1. LoftShot\n2. StrikeShot\n3. RotateShot\n4. Defend\n";
+            cout << "Batting Choice:\n\n1. LoftShot\n2. StrikeShot\n3. RotateShot\n4. Defend\n";
 
-            cout << "5. Exit The Game!\n\n\n";
+            cout << "5. Exit The Game!\n\n";
 
             batChoice = getIntInput("Enter Your Choice: ");
 
@@ -314,7 +314,7 @@ int bowlTournament(string userTeam, string aiTeam, int ball){
 
             clearScreen();
 
-            scoreCard(aiScore, aiWicket, temporaryBall, target, aiTeam);
+            scoreCard(aiScore, aiWicket, temporaryBall, target, aiTeam, ball);
 
             if(aiWicket == 10){
 
@@ -408,7 +408,7 @@ int bowlTournament(string userTeam, string aiTeam, int ball){
 
             clearScreen();
 
-            scoreCard(aiScore, aiWicket, temporaryBall, target, aiTeam);
+            scoreCard(aiScore, aiWicket, temporaryBall, target, aiTeam, ball);
 
             if(aiWicket == 10){
 
@@ -557,7 +557,7 @@ void bat(string userTeam, string aiTeam, int ball){
 
             clearScreen();
 
-            scoreCard(userScore, userWicket, temporaryBall, target, userTeam);
+            scoreCard(userScore, userWicket, temporaryBall, target, userTeam, ball);
 
             if(userWicket == 10){
 
@@ -579,9 +579,9 @@ void bat(string userTeam, string aiTeam, int ball){
 
             cout << bowlVariation[aiBowl] << " Delivary Incoming With " << bowlSpeed << " Speed" << " \n\n";
 
-            cout << "Batting Choice:\n\n\n1. LoftShot\n2. StrikeShot\n3. RotateShot\n4. Defend\n";
+            cout << "Batting Choice:\n\n1. LoftShot\n2. StrikeShot\n3. RotateShot\n4. Defend\n";
 
-            cout << "5. Exit The Game!\n\n\n";
+            cout << "5. Exit The Game!\n\n";
 
             batChoice = getIntInput("Enter Your Choice: ");
 
@@ -633,7 +633,7 @@ void bat(string userTeam, string aiTeam, int ball){
 
             clearScreen();
 
-            scoreCard(userScore, userWicket, temporaryBall, target, userTeam);
+            scoreCard(userScore, userWicket, temporaryBall, target, userTeam, ball);
 
             if(userWicket == 10){
 
@@ -665,9 +665,9 @@ void bat(string userTeam, string aiTeam, int ball){
 
             cout << bowlVariation[aiBowl] << " Delivary Incoming With " << bowlSpeed << " Speed" << " \n\n";
 
-            cout << "Batting Choice:\n\n\n1. LoftShot\n2. StrikeShot\n3. RotateShot\n4. Defend\n";
+            cout << "Batting Choice:\n\n1. LoftShot\n2. StrikeShot\n3. RotateShot\n4. Defend\n";
 
-            cout << "5. Exit The Game!\n\n\n";
+            cout << "5. Exit The Game!\n\n";
 
             batChoice = getIntInput("Enter Your Choice: ");
 
@@ -767,7 +767,7 @@ void bowl(string userTeam, string aiTeam, int ball){
 
             clearScreen();
 
-            scoreCard(aiScore, aiWicket, temporaryBall, target, aiTeam);
+            scoreCard(aiScore, aiWicket, temporaryBall, target, aiTeam, ball);
 
             if(aiWicket == 10){
 
@@ -861,7 +861,7 @@ void bowl(string userTeam, string aiTeam, int ball){
 
             clearScreen();
 
-            scoreCard(aiScore, aiWicket, temporaryBall, target, aiTeam);
+            scoreCard(aiScore, aiWicket, temporaryBall, target, aiTeam, ball);
 
             if(aiWicket == 10){
 

@@ -241,13 +241,15 @@ void exhibitionMenu(){
                 
                     clearScreen();
                 
-                    over = getIntInput("Enter The Over (5 - 10): ");
+                    over = getIntInput("Enter The Over (5 - 50): ");
+
+                    if(over == -1)  break;
 
                     if(over<5 || over>10){
 
                         clearScreen();
 
-                        cout << "Invalid Input! Choose Between (1 - 5)!\n";
+                        cout << "Invalid Input! Choose Between (5 - 50)!\n";
 
                         pressToContinue();
 
@@ -255,17 +257,22 @@ void exhibitionMenu(){
 
                 }   while(over<5 || over>10);
 
-                clearScreen();
+                if(over == -1){}
+                else{
 
-                ball = over*6;
+                    clearScreen();
 
-                cout << "Over Selection Done. Now You Will Play Match In " << over << " Overs\n";
+                    ball = over*6;
 
-                cout << "Loading...\n";
+                    cout << "Over Selection Done. Now You Will Play Match In " << over << " Overs\n";
 
-                pressToContinue();
+                    cout << "Loading...\n";
 
-                ballFlag = true;
+                    pressToContinue();
+
+                    ballFlag = true;
+
+                }
 
             }
 
@@ -293,6 +300,8 @@ void exhibitionMenu(){
 
                     teamChoice = getIntInput("Enter Your Choice: ");
 
+                    if(teamChoice == -1)    break;
+
                     if(teamChoice < 1 || teamChoice > 12){
 
                         clearScreen();
@@ -318,15 +327,21 @@ void exhibitionMenu(){
 
                 } while(teamChoice < 1 || teamChoice > 12);
 
-                clearScreen();
+                if(teamChoice == -1){}
 
-                userTeam = team[teamChoice-1];
+                else{
 
-                cout << "Team Selection Done!\n\nYour Team: " << userTeam << " \n\n";
+                    clearScreen();
 
-                pressToContinue();
+                    userTeam = team[teamChoice-1];
 
-                userTeamFlag = true;
+                    cout << "Team Selection Done!\n\nYour Team: " << userTeam << " \n\n";
+
+                    pressToContinue();
+
+                    userTeamFlag = true;
+
+                }
 
             }
 
@@ -354,6 +369,8 @@ void exhibitionMenu(){
 
                     teamChoice = getIntInput("Enter Your Choice: ");
 
+                    if(teamChoice == -1)    break;
+
                     if(teamChoice < 1 || teamChoice > 12){
 
                         clearScreen();
@@ -379,15 +396,21 @@ void exhibitionMenu(){
 
                 } while(teamChoice < 1 || teamChoice > 12);
 
-                clearScreen();
+                if(teamChoice == -1){}
 
-                aiTeam = team[teamChoice-1];
+                else{
 
-                cout << "Team Selection Done!\n\nAI Team: " << aiTeam << " \n\n";
+                    clearScreen();
 
-                pressToContinue();
+                    aiTeam = team[teamChoice-1];
 
-                aiTeamFlag = true;
+                    cout << "Team Selection Done!\n\nAI Team: " << aiTeam << " \n\n";
+
+                    pressToContinue();
+
+                    aiTeamFlag = true;
+
+                }
 
             }
 
@@ -415,6 +438,8 @@ void exhibitionMenu(){
 
                     toss = getIntInput("Enter Your Choice: ");
 
+                    if(toss == -1)  break;
+
                     if(toss < 1 || toss > 2){
 
                         clearScreen();
@@ -427,79 +452,85 @@ void exhibitionMenu(){
 
                 }   while(toss < 1 || toss > 2);
 
-                clearScreen();
-
-                tossResultFlag = true;
-
-                int aiToss = rand()%2 + 1;
-
-                if(toss==aiToss){
-
-                    int userTossChoose;
-
-                    do{
-
-                        clearScreen();
-                    
-                        cout << "Congrats! You Won The Toss! Choose Which One First You Want To Do\n\n";
-
-                        cout << "1. Bat\n\n2. Bowl\n\n";
-
-                        userTossChoose = getIntInput("Enter Your Choice (1 - 2): ");
-
-                        if(userTossChoose<1 || userTossChoose>2){
-
-                            clearScreen();
-
-                            cout << "Wrong Input! Choose Between (1 - 2)!\n";
-
-                            pressToContinue();
-
-                        }
-
-                    }   while(userTossChoose<1 || userTossChoose>2);
-
-                    tossResult = userTossChoose;
-
-                    clearScreen();
-
-                    if(tossResult==1){
-
-                        cout << "You Won The Toss And Elected To Bat First!\n";
-
-                    }
-
-                    else{
-
-                        cout << "You Won The Toss And Elected To Bowl First!\n";
-
-                    }
-
-                    pressToContinue();
-
-                }
+                if(toss == -1){}
 
                 else{
 
-                    int aiTossChoose = rand()%2 + 1;
-
-                    tossResult = aiTossChoose - 1;
-
                     clearScreen();
 
-                    if(tossResult==1){
+                    tossResultFlag = true;
 
-                        cout << "You Lost The Toss! You Have To Bat First!\n";
+                    int aiToss = rand()%2 + 1;
+
+                    if(toss==aiToss){
+
+                        int userTossChoose;
+
+                        do{
+
+                            clearScreen();
+                    
+                            cout << "Congrats! You Won The Toss! Choose Which One First You Want To Do\n\n";
+
+                            cout << "1. Bat\n\n2. Bowl\n\n";
+
+                            userTossChoose = getIntInput("Enter Your Choice (1 - 2): ");
+
+                            if(userTossChoose<1 || userTossChoose>2){
+
+                                clearScreen();
+
+                                cout << "Wrong Input! Choose Between (1 - 2)!\n";
+
+                                pressToContinue();
+
+                            }
+
+                        }   while(userTossChoose<1 || userTossChoose>2);
+
+                        tossResult = userTossChoose;
+
+                        clearScreen();
+
+                        if(tossResult==1){
+
+                            cout << "You Won The Toss And Elected To Bat First!\n";
+
+                        }
+
+                        else{
+
+                            cout << "You Won The Toss And Elected To Bowl First!\n";
+
+                        }
+
+                        pressToContinue();
 
                     }
 
                     else{
 
-                        cout << "You Lost The Toss! You Have To Bowl First!\n";
+                        int aiTossChoose = rand()%2 + 1;
+
+                        tossResult = aiTossChoose;
+
+                        clearScreen();
+
+                        if(tossResult==1){
+
+                            cout << "You Lost The Toss! You Have To Bat First!\n";
+
+                        }
+
+                        else{
+
+                            cout << "You Lost The Toss! You Have To Bowl First!\n";
+
+                        }
+
+                        pressToContinue();
 
                     }
-
-                    pressToContinue();
 
                 }
 
@@ -521,7 +552,7 @@ void exhibitionMenu(){
 
             if(userTeam == "" || aiTeam == "" || ball == 0 || tossResult == 0){
 
-                cout << "First Complete 1 - 4 step";
+                cout << "First Complete 1 - 4 step\n";
 
                 pressToContinue();
 
@@ -577,7 +608,7 @@ void exhibitionMenu(){
 
         }
 
-        else if(choice == 7){
+        else if(choice == 7 || choice == -1){
 
             return;
 
@@ -680,7 +711,7 @@ void playMenu(){
 
         }
 
-        else if(choice == 5){
+        else if(choice == 5 || choice == -1){
 
             return;
 
@@ -784,6 +815,16 @@ void account_menu() {
 
                 exit(0);
         
+            }
+
+            else if (choice == -1){
+
+                clearScreen();
+
+                cout << "Sorry! Going Back Is Not Allowed Here!\n";
+
+                pressToContinue();
+
             }
         
             else {

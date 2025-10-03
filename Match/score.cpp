@@ -177,7 +177,7 @@ string commentaryForOneTwo[] = {
 
 
 
-void scoreCard(int score, int wicket, int ball, int target, string team){
+void scoreCard(int score, int wicket, int ball, int target, string team, int over){
     
     int width = 77;
     
@@ -204,10 +204,22 @@ void scoreCard(int score, int wicket, int ball, int target, string team){
     printLine("Wicket: ", to_string(wicket));
     
     printLine("Ball: ", to_string(ball));
+
+    if(targetFlag){
+
+        printLine("Target: ", to_string(target));
+
+        int runsNeeded = target - score;
     
-    if(targetFlag) printLine("Target: ", to_string(target));
+        int ballsLeft  = over - ball;
     
-    cout << string(width+2, '-') << "\n"; // bottom border
+        string needLine = "" + team + " Need " + to_string(runsNeeded) + 
+                      " Runs From " + to_string(ballsLeft) + " Balls To Win The Match";
+    
+        printLine("", needLine);
+    }
+    
+    cout << string(width+2, '-') << "\n";
 
 }
 

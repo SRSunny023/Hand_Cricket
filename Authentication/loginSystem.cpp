@@ -204,25 +204,12 @@ void registerUser() {
 
     User newUser;
 
-    cout << "----------------------------------------------------------------------------\n";
-    cout << "|                               Registration                               |\n";
-    cout << "|                                                                          |\n";
-    cout << "| 1. Enter Email: ";
-    cin >> newUser.email;
-    cout << "|                                                                          |\n";
-    cout << "| 2. Enter Username: ";
-    cin >> newUser.username;
-    cout << "|                                                                          |\n";
-    cout << "| 3. Enter Password: ";
-    cin >> newUser.password;
-    cout << "|                                                                          |\n";
-    cout << "| 4. Confirm Password: ";
-    cin >> newUser.confirmPassword;
-    cout << "|                                                                          |\n";
-    cout << "----------------------------------------------------------------------------\n";
+    newUser.email = getEmailInput("Enter Email: ");
+
+    if(newUser.email == "/")    return;
     
     auto users = loadUsers();
-
+    
     for (auto &u : users) {
         
         if (u.email == newUser.email) {
@@ -236,7 +223,26 @@ void registerUser() {
         }
     
     }
-    
+
+    cout << "Enter Username: ";
+    cin >> newUser.username;
+
+    if(newUser.username == "*"){
+
+        clearScreen();
+
+        cout << "Program Successfully Exitted!\n";
+
+        exit(0);
+
+    }
+
+    if(newUser.username == "/"){
+
+        return;
+
+    }
+
     for (auto &u : users) {
         
         if (u.username == newUser.username) {
@@ -251,6 +257,44 @@ void registerUser() {
     
     }
 
+    cout << "Enter Password: ";
+    cin >> newUser.password;
+
+    if(newUser.password == "*"){
+
+        clearScreen();
+
+        cout << "Program Successfully Exitted!\n";
+
+        exit(0);
+
+    }
+
+    if(newUser.password == "/"){
+
+        return;
+
+    }
+
+    cout << "Confirm Password: ";
+    cin >> newUser.confirmPassword;
+
+    if(newUser.confirmPassword == "*"){
+
+        clearScreen();
+
+        cout << "Program Successfully Exitted!\n";
+
+        exit(0);
+
+    }
+
+    if(newUser.confirmPassword == "/"){
+
+        return;
+
+    }
+    
     if(newUser.password != newUser.confirmPassword){
 
         cout << "Password Didn't Match!\n";
@@ -314,66 +358,19 @@ void userMenu(User &loggedInUser, vector<User> &allUsers) {
             
             clearScreen();
             
-            cout << "--- Profile ---\n";
+            cout << "----------------------------------------------------------------------------\n";
+            cout << "|                               Profile                                    |\n";
+            cout << "----------------------------------------------------------------------------\n";
             
-            cout << "Email: " << loggedInUser.email << "\n";
+            cout << "Email: " << loggedInUser.email << "\n\n";
             
-            cout << "Username: " << loggedInUser.username << "\n";
-            
-            pressToContinue();
-        
-        }
-        
-        else if (choice == 3) {
-            
-            clearScreen();
-            
-            cout << "--- Change Password ---\n";
-            
-            string newPass,newConfirmPass;
-            
-            cout << "Enter New Password: ";
-            
-            cin >> newPass;
-
-            cout << "Confirm New Password: ";
-            
-            cin >> newConfirmPass;
-
-            if(newPass != newConfirmPass){
-
-                cout << "Password Didn't Match!\nPassword Reset Failed! Try Again!\n";
-
-                pressToContinue();
-
-                return;
-
-            }
-            
-            loggedInUser.password = newPass;
-
-            // Update in allUsers and save
-            for (auto &u : allUsers) {
-                
-                if (u.username == loggedInUser.username) {
-                    
-                    u.password = newPass;
-                    
-                    break;
-                
-                }
-            
-            }
-            
-            saveUsers(allUsers);
-            
-            cout << "Password changed successfully!\n";
+            cout << "Username: " << loggedInUser.username << "\n\n";
             
             pressToContinue();
         
         }
         
-        else if (choice == 5) {
+        else if (choice == 4) {
             
             cout << "Logging out...\n";
 
@@ -385,13 +382,21 @@ void userMenu(User &loggedInUser, vector<User> &allUsers) {
         
         }
 
-        else if(choice == 6) {
+        else if(choice == 5) {
 
             clearScreen();
 
             cout << "Program Exitted!\n";
 
             exit(0);
+
+        }
+
+        else if(choice == -1){
+
+            cout << "Going Back Not Allowed Here!\n";
+
+            pressToContinue();
 
         }
         
@@ -427,67 +432,176 @@ void userMenu(User &loggedInUser, vector<User> &allUsers) {
 /****************************************************************************************************/
 
 void loginUser() {
-    
-    clearScreen();
 
-    string user, pass;
-    
-    cout << "----------------------------------------------------------------------------\n";
-    cout << "|                               Login                                      |\n";
-    cout << "|                                                                          |\n";
-    cout << "| 1. Enter Username: ";
-    cin >> user;
-    cout << "|                                                                          |\n";
-    cout << "| 2. Enter Password: ";
-    cin >> pass;
-    cout << "|                                                                          |\n";
-    cout << "----------------------------------------------------------------------------\n";
+    int incorrectPass = 0;
+    int incorrectEmail = 0;
 
-    
-    auto users = loadUsers();
-    
-    bool usernameFound = false;
-
-    for (auto &u : users) {
+    while(true){
         
-        if (u.username == user) {
-            
-            usernameFound = true;
-            
-            if (u.password == pass) {
-                
-                cout << "Login Successful! Welcome " << user << "\n";
-                
-                saveSession(user);
-                
-                pressToContinue();
-                
-                userMenu(u, users);
-                
-                return;
-            
-            } 
-            
-            else {
-                
-                cout << "Incorrect password for user: " << user << "\n";
-                
-                pressToContinue();
-                
-                return;
-            
-            }
+        clearScreen();
         
+        string email, pass;
+    
+        cout << "----------------------------------------------------------------------------\n";
+        cout << "|                               Login                                      |\n";
+        cout << "----------------------------------------------------------------------------\n";
+        cout << "Enter Email: ";
+        cin >> email;
+        if(email == "*"){
+
+            clearScreen();
+
+            cout << "Program Successfully Exitted!\n";
+
+            exit(0);
+
         }
-    
-    }
+        if(email == "/"){
 
-    if (!usernameFound) {
-        
-        cout << "Username not found!\n";
-        
-        pressToContinue();
+            return;
+
+        }
+        cout << "Enter Password: ";
+        cin >> pass;
+
+        if(pass == "*"){
+
+            clearScreen();
+
+            cout << "Program Successfully Exitted!\n";
+
+            exit(0);
+
+        }
+        if(pass == "/"){
+
+            return;
+
+        }
+
     
+        auto users = loadUsers();
+    
+        bool emailFound = false;
+
+        for (auto &u : users) {
+        
+            if (u.email == email) {
+            
+                emailFound = true;
+            
+                if (u.password == pass) {
+                
+                    cout << "Login Successful! Welcome " << u.username << "\n";
+                
+                    saveSession(u.username);
+                
+                    pressToContinue();
+                
+                    userMenu(u, users);
+                
+                    return;
+            
+                } 
+            
+                else {
+                
+                    cout << "Incorrect password for user: " << u.username << "\n";
+
+                    incorrectPass++;
+                
+                    pressToContinue();
+            
+                }
+        
+            }
+    
+        }
+
+        if (!emailFound) {
+        
+            clearScreen();
+            
+            cout << "Email not found!\n";
+
+            incorrectEmail++;
+        
+            pressToContinue();
+    
+        }
+
+        if(incorrectPass > 2){
+
+            clearScreen();
+            
+            cout << "Too Much Wrong Password Do You Want To Reset Password?\nIf Yes Click 1\n";
+            cout << "If You Want To Create A New Account\nClick 2\n";
+
+            int choice;
+
+            choice = getIntInput("Enter Your Choice: ");
+
+            if(choice == 1){
+
+                resetPassword();
+
+                return;
+
+            }
+
+            else if(choice == 2){
+
+                registerUser();
+
+                return;
+
+            }
+
+            else if(choice == -1){
+
+                return;
+
+            }
+
+            else{
+
+                int incorrectPass = 0;
+
+            }
+
+        }
+        if(incorrectEmail > 2){
+
+            clearScreen();
+            
+            cout << "Too Much Wrong Email Do You Want To Create A New Accout?\nIf Yes Click 1\n";
+
+            int choice;
+
+            choice = getIntInput("Enter Your Choice: ");
+
+            if(choice == 1){
+
+                registerUser();
+
+                return;
+
+            }
+
+            else if(choice == -1){
+
+                return;
+
+            }
+
+            else{
+
+                int incorrectEmail = 0;
+
+            }
+
+        }
+
     }
 
 }
@@ -516,13 +630,29 @@ void resetPassword() {
     
     clearScreen();
 
-    string email, newPass;
+    string email, newPass, confirmNewPass;
     
     cout << "----------------------------------------------------------------------------\n";
     cout << "|                               Reset Password                             |\n";
-    cout << "|                                                                          |\n";
-    cout << "| 1. Enter Email: ";
+    cout << "----------------------------------------------------------------------------\n";
+    cout << "Enter Email: ";
     cin >> email;
+
+    if(email == "*"){
+
+        clearScreen();
+
+        cout << "Program Successfully Exitted!\n";
+
+        exit(0);
+
+    }
+
+    if(email == "/"){
+
+        return;
+
+    }
 
     auto users = loadUsers();
     
@@ -530,30 +660,64 @@ void resetPassword() {
         
         if (u.email == email) {
             
-            cout << "|                                                                          |\n";
-            cout << "| 2. Enter New Password: ";
+            cout << "Enter New Password: ";
             cin >> newPass;
-            cout << "|                                                                          |\n";
-            cout << "----------------------------------------------------------------------------\n";
+
+            if(newPass == "*"){
+
+                clearScreen();
+
+                cout << "Program Successfully Exitted!\n";
+
+                exit(0);
+
+            }
+
+            if(newPass == "/")  return;
+
+            cout << "Confirm New Password: ";
+            cin >> confirmNewPass;
+
+            if(confirmNewPass == "*"){
+
+                clearScreen();
+
+                cout << "Program Successfully Exitted!\n";
+
+                exit(0);
+
+            }
+
+            if(confirmNewPass == "/")  return;
+
+            if(newPass == confirmNewPass){
+
+                u.password = newPass;
             
-            u.password = newPass;
+                saveUsers(users);
             
-            saveUsers(users);
+                cout << "Password Updated!\n";
             
-            cout << "Password Updated!\n";
+                pressToContinue();
             
-            pressToContinue();
-            
-            return;
+                return;
+
+            }
+
+            else{
+
+                cout << "Password Didn't Matched!\n";
+
+                pressToContinue();
+
+                return;
+
+            }
         
         }
     
     }
-    
-    cout << "|                                                                          |\n";
-    cout << "| Email Not Found                                                          |\n";
-    cout << "|                                                                          |\n";
-    cout << "----------------------------------------------------------------------------\n";
+    cout << "Email Not Found\n";
     
     pressToContinue();
 
@@ -570,9 +734,25 @@ void resetUsername() {
     
     cout << "----------------------------------------------------------------------------\n";
     cout << "|                               Reset Username                             |\n";
-    cout << "|                                                                          |\n";
-    cout << "| 1. Enter Email: ";
+    cout << "----------------------------------------------------------------------------\n";
+    cout << "Enter Email: ";
     cin >> email;
+
+    if(email == "*"){
+
+        clearScreen();
+
+        cout << "Program Successfully Exitted!\n";
+
+        exit(0);
+
+    }
+
+    if(email == "/"){
+
+        return;
+
+    }
 
     auto users = loadUsers();
     
@@ -580,11 +760,20 @@ void resetUsername() {
         
         if (u.email == email) {
             
-            cout << "|                                                                          |\n";
-            cout << "| 2. Enter New Username: ";
+            cout << "Enter New Username: ";
             cin >> newUserName;
-            cout << "|                                                                          |\n";
-            cout << "----------------------------------------------------------------------------\n";
+            
+            if(newUserName == "*"){
+
+                clearScreen();
+
+                cout << "Program Successfully Exitted!\n";
+
+                exit(0);
+
+            }
+
+            if(newUserName == "/")  return;
             
             u.username = newUserName;
             
@@ -600,10 +789,7 @@ void resetUsername() {
     
     }
     
-    cout << "|                                                                          |\n";
-    cout << "| Email Not Found                                                          |\n";
-    cout << "|                                                                          |\n";
-    cout << "----------------------------------------------------------------------------\n";
+    cout << "Email Not Found\n";
     
     pressToContinue();
 
