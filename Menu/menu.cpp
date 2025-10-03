@@ -1,18 +1,45 @@
-#include <iostream>
-#include <limits>
-#include <string>
-
 #include "menu.h"
 #include "loginSystem.h"
 #include "matchEngine.h"
+#include "printMenu.h"
+#include "utility.h"
 #include "../Tournament/Asia_Cup_2025/asiaCup2025.h"
 #include "tournamentEngine.h"
-#include <iomanip>
 
+
+
+
+
+
+
+
+
+#include <iostream>
+#include <limits>
+#include <string>
+#include <iomanip>
 using namespace std;
 
 
 
+
+
+
+
+
+
+
+
+
+/****************************************************************************************************/
+/* Function Name: tournamentMenu                                                                    */
+/*                                                                                                  */
+/* Inputs       : None                                                                              */
+/*                                                                                                  */
+/* Returns      : None                                                                              */
+/*                                                                                                  */
+/* Note         : This Function for tournamentMenu Where Player Can Play Tournament                 */
+/****************************************************************************************************/
 
 void tournamentMenu(){
 
@@ -33,26 +60,7 @@ void tournamentMenu(){
     
     while(true){
 
-        clearScreen();
-
-        cout << "----------------------------------------------------------------------------\n";
-        cout << "|                           Tournament Menu                                |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 1. Asia Cup 2025                                                         |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 2. Champions Trophy 2025                                                 |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 3. ODI World Cup 2023                                                    |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 4. T20 World Cup 2024                                                    |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 5. Reset Team                                                            |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 6. Back                                                                  |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 7. Exit                                                                  |\n";
-        cout << "|                                                                          |\n";
-        cout << "----------------------------------------------------------------------------\n";
+        printTournamentMenu();
 
         int choice = getIntInput("Enter Your Choice: ");
 
@@ -64,28 +72,7 @@ void tournamentMenu(){
 
                 do{
 
-                    clearScreen();
-
-                    cout << "----------------------------------------------------------------------------\n";
-                    cout << "|                    Asia Cup 2025 Team Selection                          |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 1. Afghanistan                                                           |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 2. Bangladesh                                                            |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 3. Hong Kong                                                             |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 4. India                                                                 |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 5. Oman                                                                  |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 6. Pakistan                                                              |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 7. Sri Lanka                                                             |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 8. United Arab Emirates                                                  |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "----------------------------------------------------------------------------\n";
+                    printAsiaCupTeamSelection();
 
                     teamChoice = getIntInput("Enter Your Choice: ");
 
@@ -185,6 +172,26 @@ void tournamentMenu(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+/****************************************************************************************************/
+/* Function Name: exhibitionMenu                                                                    */
+/*                                                                                                  */
+/* Inputs       : None                                                                              */
+/*                                                                                                  */
+/* Returns      : None                                                                              */
+/*                                                                                                  */
+/* Note         : This Function for ExhibitionMenu Where Player Can Play Exhibition Match           */
+/****************************************************************************************************/
+
 void exhibitionMenu(){
 
     string team[] = {
@@ -220,28 +227,7 @@ void exhibitionMenu(){
     
     while(true){
 
-        clearScreen();
-
-        cout << "----------------------------------------------------------------------------\n";
-        cout << "|                             Exhibition Menu                              |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 1. Choose Over                                                           |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 2. Choose Your Team                                                      |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 3. Choose Your Opponent Team                                             |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 4. Do Toss                                                               |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 5. Start The Match                                                       |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 6. Reset (1 - 4)                                                         |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 7. Back                                                                  |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 8. Exit                                                                  |\n";
-        cout << "|                                                                          |\n";
-        cout << "----------------------------------------------------------------------------\n";
+        printExhibitionMenu();
 
         int choice = getIntInput("Enter Choice: ");
 
@@ -303,36 +289,7 @@ void exhibitionMenu(){
             
                 do{
 
-                    clearScreen();
-
-                    cout << "----------------------------------------------------------------------------\n";
-                    cout << "|                         User Team Selection Menu                         |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 1.  Afghanistan                                                          |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 2.  Australia                                                            |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 3.  Bangladesh                                                           |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 4.  England                                                              |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 5.  India                                                                |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 6.  Ireland                                                              |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 7.  New Zealand                                                          |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 8.  Pakistan                                                             |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 9.  South Africa                                                         |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 10. Sri Lanka                                                            |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 11. West Indies                                                          |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 12. Zimbabwe                                                             |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "----------------------------------------------------------------------------\n";
+                    printUserTeamSelectionMenu();
 
                     teamChoice = getIntInput("Enter Your Choice: ");
 
@@ -393,36 +350,7 @@ void exhibitionMenu(){
             
                 do{
 
-                    clearScreen();
-
-                    cout << "----------------------------------------------------------------------------\n";
-                    cout << "|                        AI Team Selection Menu                            |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 1.  Afghanistan                                                          |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 2.  Australia                                                            |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 3.  Bangladesh                                                           |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 4.  England                                                              |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 5.  India                                                                |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 6.  Ireland                                                              |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 7.  New Zealand                                                          |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 8.  Pakistan                                                             |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 9.  South Africa                                                         |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 10. Sri Lanka                                                            |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 11. West Indies                                                          |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 12. Zimbabwe                                                             |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "----------------------------------------------------------------------------\n";
+                    printAiTeamSelectionMenu();
 
                     teamChoice = getIntInput("Enter Your Choice: ");
 
@@ -483,16 +411,7 @@ void exhibitionMenu(){
 
                 do{
 
-                    clearScreen();
-
-                    cout << "----------------------------------------------------------------------------\n";
-                    cout << "|                        Toss Selection Menu                               |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 1. Head                                                                  |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "| 2. Tail                                                                  |\n";
-                    cout << "|                                                                          |\n";
-                    cout << "----------------------------------------------------------------------------\n";
+                    printTossSelectionMenu();
 
                     toss = getIntInput("Enter Your Choice: ");
 
@@ -693,28 +612,35 @@ void exhibitionMenu(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/****************************************************************************************************/
+/* Function Name: playMenu                                                                          */
+/*                                                                                                  */
+/* Inputs       : None                                                                              */
+/*                                                                                                  */
+/* Returns      : None                                                                              */
+/*                                                                                                  */
+/* Note         : This Function for Play Menu User Can Choose What To Play                          */
+/****************************************************************************************************/
+
 void playMenu(){
 
     while(true){
 
-        clearScreen();
-
-        cout << "----------------------------------------------------------------------------\n";
-        cout << "|                               Play Menu                                  |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 1. Exhibition Match                                                      |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 2. Tournament                                                            |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 3. Series                                                                |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 4. About                                                                 |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 5. Back                                                                  |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 6. Exit                                                                  |\n";
-        cout << "|                                                                          |\n";
-        cout << "----------------------------------------------------------------------------\n";
+        printPlayMenu();
 
         int choice = getIntInput("Enter Choice: ");
 
@@ -778,6 +704,96 @@ void playMenu(){
 
             pressToContinue();
 
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/****************************************************************************************************/
+/* Function Name: account_menu                                                                      */
+/*                                                                                                  */
+/* Inputs       : None                                                                              */
+/*                                                                                                  */
+/* Returns      : None                                                                              */
+/*                                                                                                  */
+/* Note         : This Function for account menu                                                    */
+/****************************************************************************************************/
+
+void account_menu() {
+    
+    
+    string activeUser = loadSession();
+
+    if (!activeUser.empty()) {
+
+        auto users = loadUsers();
+        
+        for (auto &u : users) {
+            
+            if (u.username == activeUser) {
+                
+                userMenu(u, users);
+            
+            }
+        
+        }
+    
+    }
+
+    else{
+
+        while (true) {
+        
+            printAccountMenu();
+        
+            int choice = getIntInput("Enter choice: ");
+
+            if (choice == 1) registerUser();
+        
+            else if (choice == 2) loginUser();
+        
+            else if (choice == 3) resetPassword();
+
+            else if (choice == 4) resetUsername();
+        
+            else if (choice == 5) {
+            
+                clearScreen();
+            
+                cout << "Program Successfully Exitted!\n";
+
+                exit(0);
+        
+            }
+        
+            else {
+            
+                cout << "Invalid Choice! Choose Between (1 - 5)\n";
+            
+                pressToContinue();
+        
+            }
+    
         }
 
     }

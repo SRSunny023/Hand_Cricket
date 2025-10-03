@@ -9,12 +9,18 @@ struct User {
     string email,username,password,confirmPassword;
 };
 
-void account_menu();
+void resetUsername();
 
-int getIntInput(const string &prompt);
+void resetPassword();
 
-void clearScreen();
+void loginUser();
 
-void pressToContinue();
+void registerUser();
+
+string loadSession();
+
+vector<User> loadUsers();
+
+void userMenu(User &loggedInUser, vector<User> &allUsers);
 
 #endif

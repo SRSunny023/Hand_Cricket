@@ -1,0 +1,308 @@
+#include <iostream>
+#include "printMenu.h"
+#include "utility.h"
+
+
+void printTournamentMenu(){
+
+    clearScreen();
+    
+    cout << "----------------------------------------------------------------------------\n";
+    cout << "|                           Tournament Menu                                |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 1. Asia Cup 2025                                                         |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 2. Champions Trophy 2025                                                 |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 3. ODI World Cup 2023                                                    |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 4. T20 World Cup 2024                                                    |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 5. Reset Team                                                            |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 6. Back                                                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 7. Exit                                                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "----------------------------------------------------------------------------\n";
+
+}
+
+
+
+
+
+
+
+
+void printAsiaCupTeamSelection(){
+
+    clearScreen();
+
+    cout << "----------------------------------------------------------------------------\n";
+    cout << "|                    Asia Cup 2025 Team Selection                          |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 1. Afghanistan                                                           |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 2. Bangladesh                                                            |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 3. Hong Kong                                                             |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 4. India                                                                 |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 5. Oman                                                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 6. Pakistan                                                              |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 7. Sri Lanka                                                             |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 8. United Arab Emirates                                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "----------------------------------------------------------------------------\n";
+
+}
+
+
+
+
+
+
+
+
+
+void printExhibitionMenu(){
+
+    clearScreen();
+
+    cout << "----------------------------------------------------------------------------\n";
+    cout << "|                             Exhibition Menu                              |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 1. Choose Over                                                           |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 2. Choose Your Team                                                      |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 3. Choose Your Opponent Team                                             |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 4. Do Toss                                                               |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 5. Start The Match                                                       |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 6. Reset (1 - 4)                                                         |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 7. Back                                                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 8. Exit                                                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "----------------------------------------------------------------------------\n";
+
+}
+
+
+
+
+
+
+
+
+void printUserTeamSelectionMenu(){
+
+    clearScreen();
+
+    cout << "----------------------------------------------------------------------------\n";
+    cout << "|                         User Team Selection Menu                         |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 1.  Afghanistan                                                          |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 2.  Australia                                                            |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 3.  Bangladesh                                                           |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 4.  England                                                              |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 5.  India                                                                |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 6.  Ireland                                                              |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 7.  New Zealand                                                          |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 8.  Pakistan                                                             |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 9.  South Africa                                                         |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 10. Sri Lanka                                                            |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 11. West Indies                                                          |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 12. Zimbabwe                                                             |\n";
+    cout << "|                                                                          |\n";
+    cout << "----------------------------------------------------------------------------\n";
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+void printAiTeamSelectionMenu(){
+
+    clearScreen();
+
+    cout << "----------------------------------------------------------------------------\n";
+    cout << "|                           AI Team Selection Menu                         |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 1.  Afghanistan                                                          |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 2.  Australia                                                            |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 3.  Bangladesh                                                           |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 4.  England                                                              |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 5.  India                                                                |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 6.  Ireland                                                              |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 7.  New Zealand                                                          |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 8.  Pakistan                                                             |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 9.  South Africa                                                         |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 10. Sri Lanka                                                            |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 11. West Indies                                                          |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 12. Zimbabwe                                                             |\n";
+    cout << "|                                                                          |\n";
+    cout << "----------------------------------------------------------------------------\n";
+
+}
+
+
+
+
+
+
+
+
+
+
+void printTossSelectionMenu(){
+
+    clearScreen();
+
+    cout << "----------------------------------------------------------------------------\n";
+    cout << "|                        Toss Selection Menu                               |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 1. Head                                                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 2. Tail                                                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "----------------------------------------------------------------------------\n";
+
+}
+
+
+
+
+
+
+
+
+
+
+void printPlayMenu(){
+
+    clearScreen();
+
+    cout << "----------------------------------------------------------------------------\n";
+    cout << "|                               Play Menu                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 1. Exhibition Match                                                      |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 2. Tournament                                                            |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 3. Series                                                                |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 4. About                                                                 |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 5. Back                                                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 6. Exit                                                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "----------------------------------------------------------------------------\n";
+
+}
+
+
+
+
+
+
+
+void printAccountMenu(){
+
+    clearScreen();
+        
+    cout << "----------------------------------------------------------------------------\n";
+    cout << "|                               Account                                    |\n";
+    cout << "|                                                                          |\n";
+    cout << "|  1. Register                                                             |\n";
+    cout << "|                                                                          |\n";
+    cout << "|  2. Login                                                                |\n";
+    cout << "|                                                                          |\n";
+    cout << "|  3. Reset Password                                                       |\n";
+    cout << "|                                                                          |\n";
+    cout << "|  4. Reset Username                                                       |\n";
+    cout << "|                                                                          |\n";
+    cout << "|  5. Exit                                                                 |\n";
+    cout << "|                                                                          |\n";
+    cout << "----------------------------------------------------------------------------\n";
+
+}
+
+
+
+
+
+
+
+
+
+
+void printUserMenu(){
+
+    clearScreen();
+
+    cout << "----------------------------------------------------------------------------\n";
+    cout << "|                               User Menu                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 1. Play                                                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 2. View Profile                                                          |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 3. Change Password                                                       |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 4. History                                                               |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 5. Logout                                                                |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 6. Exit                                                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "----------------------------------------------------------------------------\n";
+
+}
+
+
+
+
+
+
+

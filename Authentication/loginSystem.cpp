@@ -1,10 +1,23 @@
 #include "loginSystem.h"
 #include "menu.h"
+#include "printMenu.h"
+#include "utility.h"
+
+
+
+
+
+
+
+
+
 #include <iostream>
 #include <fstream>
 #include <limits>
-
 using namespace std;
+
+
+
 
 
 
@@ -13,105 +26,6 @@ using namespace std;
 
 const string fileName = "Database/userManual.txt";   // Account Details Holding File
 const string sessionFile = "Database/session.txt";   // Session Login or Logged Out Detection File
-
-void account_menu();
-
-
-
-
-
-
-
-/****************************************************************************************************/
-/* Function Name: clearScreen                                                                       */
-/*                                                                                                  */
-/* Inputs       : None                                                                              */
-/*                                                                                                  */
-/* Returns      : Non                                                                               */
-/*                                                                                                  */
-/* Note         : This Function Clear The Console Screen                                            */
-/****************************************************************************************************/
-
-void clearScreen() {
-    
-    cout << "\033[H\033[J";
-
-}
-
-
-
-
-
-
-
-
-
-/****************************************************************************************************/
-/* Function Name: pressToContinue                                                                   */
-/*                                                                                                  */
-/* Inputs       : None                                                                              */
-/*                                                                                                  */
-/* Returns      : Non                                                                               */
-/*                                                                                                  */
-/* Note         : This Function Tells User To Press Any Key To Continue The Program                 */
-/****************************************************************************************************/
-
-void pressToContinue() {
-    
-    cout << "Press Enter to continue...";
-    
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-    
-    cin.get();
-
-}
-
-
-
-
-
-
-
-
-
-/****************************************************************************************************/
-/* Function Name: getIntInput                                                                       */
-/*                                                                                                  */
-/* Inputs       : const string                                                                      */
-/*                                                                                                  */
-/* Returns      : Int                                                                               */
-/*                                                                                                  */
-/* Note         : This Function Takes Only Integer Input Other Input Is Invalid                     */
-/****************************************************************************************************/
-
-int getIntInput(const string &prompt) {
-    
-    int value;
-    
-    while (true) {
-        
-        cout << prompt;
-        
-        cin >> value;
-        
-        if (cin.fail()) {
-            
-            cin.clear();
-            
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            
-            cout << "Invalid input! Please enter a number.\n";
-        }
-        
-        else {
-            
-            return value;
-        
-        }
-    
-    }
-
-}
 
 
 
@@ -384,24 +298,7 @@ void userMenu(User &loggedInUser, vector<User> &allUsers) {
     
     while (true) {
         
-        clearScreen();
-
-        cout << "----------------------------------------------------------------------------\n";
-        cout << "|                               User Menu                                  |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 1. Play                                                                  |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 2. View Profile                                                          |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 3. Change Password                                                       |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 4. History                                                               |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 5. Logout                                                                |\n";
-        cout << "|                                                                          |\n";
-        cout << "| 6. Exit                                                                  |\n";
-        cout << "|                                                                          |\n";
-        cout << "----------------------------------------------------------------------------\n";
+        printUserMenu();
         
         int choice = getIntInput("Enter choice: ");
 
@@ -709,99 +606,5 @@ void resetUsername() {
     cout << "----------------------------------------------------------------------------\n";
     
     pressToContinue();
-
-}
-
-
-
-
-
-
-
-
-/****************************************************************************************************/
-/* Function Name: account_menu                                                                      */
-/*                                                                                                  */
-/* Inputs       : None                                                                              */
-/*                                                                                                  */
-/* Returns      : None                                                                              */
-/*                                                                                                  */
-/* Note         : This Function for account menu                                                    */
-/****************************************************************************************************/
-
-
-void account_menu() {
-    
-    
-    string activeUser = loadSession();
-
-    if (!activeUser.empty()) {
-
-        auto users = loadUsers();
-        
-        for (auto &u : users) {
-            
-            if (u.username == activeUser) {
-                
-                userMenu(u, users);
-            
-            }
-        
-        }
-    
-    }
-
-    else{
-
-        while (true) {
-        
-            clearScreen();
-        
-            cout << "----------------------------------------------------------------------------\n";
-            cout << "|                               Account                                    |\n";
-            cout << "|                                                                          |\n";
-            cout << "|  1. Register                                                             |\n";
-            cout << "|                                                                          |\n";
-            cout << "|  2. Login                                                                |\n";
-            cout << "|                                                                          |\n";
-            cout << "|  3. Reset Password                                                       |\n";
-            cout << "|                                                                          |\n";
-            cout << "|  4. Reset Username                                                       |\n";
-            cout << "|                                                                          |\n";
-            cout << "|  5. Exit                                                                 |\n";
-            cout << "|                                                                          |\n";
-            cout << "----------------------------------------------------------------------------\n";
-        
-            int choice = getIntInput("Enter choice: ");
-
-            if (choice == 1) registerUser();
-        
-            else if (choice == 2) loginUser();
-        
-            else if (choice == 3) resetPassword();
-
-            else if (choice == 4) resetUsername();
-        
-            else if (choice == 5) {
-            
-                clearScreen();
-            
-                cout << "Program Successfully Exitted!\n";
-
-                exit(0);
-        
-            }
-        
-            else {
-            
-                cout << "Invalid Choice! Choose Between (1 - 5)\n";
-            
-                pressToContinue();
-        
-            }
-    
-        }
-
-    }
 
 }
