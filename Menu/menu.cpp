@@ -3,6 +3,7 @@
 #include "matchEngine.h"
 #include "printMenu.h"
 #include "utility.h"
+#include "pitchReport.h"
 #include "../Tournament/Asia_Cup_2025/asiaCup2025.h"
 #include "tournamentEngine.h"
 
@@ -209,6 +210,18 @@ void exhibitionMenu(){
                 "Zimbabwe",
     };
 
+    string pitch[4] = {
+
+        "Green", // Seam Bowling Pitch
+
+        "Dusty", // Spinning Pitch
+
+        "Hard",  // Pace & Bounce Pitch
+
+        "Soft",  // Pure Batting Pitch
+
+    };
+
     string userTeam = "";
 
     string aiTeam = "";
@@ -224,6 +237,16 @@ void exhibitionMenu(){
     bool ballFlag = false;
 
     bool tossResultFlag = false;
+
+    int temparature = -1;
+
+    int rainProbability = -1;
+
+    int pitchChoice = -1;
+
+    bool pitchReportFlag = false;
+
+    string choosenPitch = "";
     
     while(true){
 
@@ -549,10 +572,20 @@ void exhibitionMenu(){
         }
 
         else if(choice == 5){
+            
+            if(pitchReportFlag == false){
 
-            if(userTeam == "" || aiTeam == "" || ball == 0 || tossResult == 0){
+                pitchChoice = rand()%4;
 
-                cout << "First Complete 1 - 4 step\n";
+                temparature = rand()%(50-10+1)+10;
+
+                rainProbability = rand()%101;
+
+                choosenPitch = pitch[pitchChoice];
+            
+                pitchReport(choosenPitch, temparature, rainProbability);
+
+                pitchReportFlag = true;
 
                 pressToContinue();
 
@@ -560,7 +593,31 @@ void exhibitionMenu(){
 
             else{
 
-                startMatch(userTeam,aiTeam,ball,tossResult);
+                clearScreen();
+
+                cout << "Sorry For A Match Pitch Report Can Be Seen One Time Only!\n";
+
+                cout << "You Can Again See Pitch Report For Next Match\n";
+
+                pressToContinue();
+
+            }
+
+        }
+
+        else if(choice == 6){
+
+            if(userTeam == "" || aiTeam == "" || ball == 0 || tossResult == 0 || choosenPitch == ""){
+
+                cout << "First Complete 1 - 5 step\n";
+
+                pressToContinue();
+
+            }
+
+            else{
+
+                startMatch(userTeam,aiTeam,ball,tossResult,temparature,rainProbability,choosenPitch);
 
                 userTeamFlag = false;
 
@@ -578,11 +635,21 @@ void exhibitionMenu(){
 
                 tossResult = 0;
 
+                temparature = -1;
+
+                rainProbability = -1;
+
+                pitchChoice = -1;
+
+                pitchReportFlag = false;
+
+                choosenPitch = "";
+
             }
 
         }
 
-        else if(choice == 6){
+        else if(choice == 7){
 
             clearScreen();
 
@@ -602,19 +669,29 @@ void exhibitionMenu(){
 
             tossResult = 0;
 
-            cout << "1 - 4 (Section) Resetted Successfully!\n";
+            temparature = -1;
+
+            rainProbability = -1;
+
+            pitchChoice = -1;
+
+            pitchReportFlag = false;
+
+            choosenPitch = "";
+
+            cout << "1 - 5 (Section) Resetted Successfully!\n";
 
             pressToContinue();
 
         }
 
-        else if(choice == 7 || choice == -1){
+        else if(choice == 8 || choice == -1){
 
             return;
 
         }
 
-        else if(choice == 8){
+        else if(choice == 9){
 
             clearScreen();
 

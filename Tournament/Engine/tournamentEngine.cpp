@@ -340,13 +340,13 @@ void playNextFixture(Tournament &T, string userTeam) {
                 
                 if(t1->name == userTeam){
 
-                    result = batTournament(t1->name, t2->name, 30);
+                    result = batTournament(t1->name, t2->name, 30, 35, 50, "Green");
 
                 }
 
                 else if(t2->name == userTeam){
 
-                    result = batTournament(t2->name, t1->name, 30);
+                    result = batTournament(t2->name, t1->name, 30, 35, 50, "Green");
 
                 }
 
@@ -360,13 +360,13 @@ void playNextFixture(Tournament &T, string userTeam) {
                 
                 if(t1->name == userTeam){
 
-                    result = bowlTournament(t1->name, t2->name, 30);
+                    result = bowlTournament(t1->name, t2->name, 30, 35, 50, "Green");
 
                 }
 
                 else if(t2->name == userTeam){
 
-                    result = bowlTournament(t2->name, t1->name, 30);
+                    result = bowlTournament(t2->name, t1->name, 30, 35, 50, "Green");
 
                 }
 
@@ -386,13 +386,13 @@ void playNextFixture(Tournament &T, string userTeam) {
                 
                 if(t1->name == userTeam){
 
-                    result = bowlTournament(t1->name, t2->name, 30);
+                    result = bowlTournament(t1->name, t2->name, 30, 35, 50, "Green");
 
                 }
 
                 else if(t2->name == userTeam){
 
-                    result = bowlTournament(t2->name, t1->name, 30);
+                    result = bowlTournament(t2->name, t1->name, 30, 35, 50, "Green");
 
                 }
 
@@ -406,13 +406,13 @@ void playNextFixture(Tournament &T, string userTeam) {
                 
                 if(t1->name == userTeam){
 
-                    result = batTournament(t1->name, t2->name, 30);
+                    result = batTournament(t1->name, t2->name, 30, 35, 50, "Green");
 
                 }
 
                 else if(t2->name == userTeam){
 
-                    result = batTournament(t2->name, t1->name, 30);
+                    result = batTournament(t2->name, t1->name, 30, 35, 50, "Green");
 
                 }
 

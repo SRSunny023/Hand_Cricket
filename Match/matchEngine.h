@@ -35,13 +35,12 @@ extern string batVariation[4];
 
 
 
-void startMatch(string, string, int, int);
+void startMatch(string, string, int, int, int, int, string);
+float calculateWinProbability(int, int, int, int, int);
+void showWinProbabilityBar(float,string);
 
-void bat(string, string, int);
-void bowl(string, string, int);
-
-int batTournament(string, string, int);
-int bowlTournament(string, string, int);
+int batTournament(string, string, int, int, int, string);
+int bowlTournament(string, string, int, int, int, string);
 
 void resetProgressTournamentMatch();
 

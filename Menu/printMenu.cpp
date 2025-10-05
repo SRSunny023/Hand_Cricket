@@ -85,13 +85,15 @@ void printExhibitionMenu(){
     cout << "|                                                                          |\n";
     cout << "| 4. Do Toss                                                               |\n";
     cout << "|                                                                          |\n";
-    cout << "| 5. Start The Match                                                       |\n";
+    cout << "| 5. Pitch Report                                                          |\n";
     cout << "|                                                                          |\n";
-    cout << "| 6. Reset (1 - 4)                                                         |\n";
+    cout << "| 6. Start The Match                                                       |\n";
     cout << "|                                                                          |\n";
-    cout << "| 7. Back                                                                  |\n";
+    cout << "| 7. Reset (1 - 5)                                                         |\n";
     cout << "|                                                                          |\n";
-    cout << "| 8. Exit                                                                  |\n";
+    cout << "| 8. Back                                                                  |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 9. Exit                                                                  |\n";
     cout << "|                                                                          |\n";
     cout << "----------------------------------------------------------------------------\n";
 
