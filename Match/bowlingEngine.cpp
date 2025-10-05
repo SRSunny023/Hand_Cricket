@@ -164,7 +164,7 @@ void resetMatch() {
 
 
 
-void bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, string pitch) {
+int bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, string pitch) {
     
     int stamina = 100;
     
@@ -189,9 +189,7 @@ void bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, s
         
         pressToContinue();
         
-        bat(userTeam, aiTeam, ball, temperature, rain, pitch);
-        
-        return;
+        return bat(userTeam, aiTeam, ball, temperature, rain, pitch);
     
     }
 
@@ -213,7 +211,7 @@ void bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, s
         
         pressToContinue();
         
-        return;
+        return 4; // 4 Means Match Abandoned
     
     }
 
@@ -246,17 +244,47 @@ void bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, s
     
         clearScreen();
     
-        if (aiScore > targetReduced)
+        if (aiScore >= targetReduced){
+
             cout << aiTeam << " Won By " << 10 - aiWicket << " Wickets!\n\nHard Luck!\n\n";
-        else if (aiScore == targetReduced)
+
+            cout << userLoseComments[rand() % userLoseComments.size()] << "\n\n";
+
+            resetMatch();
+    
+            pressToContinue();
+
+            return 3;
+
+        }
+
+        else if (aiScore == targetReduced - 1){
+
             cout << "Match Tied!\n\n";
-        else
+
+            cout << tieComments[rand() % tieComments.size()] << "\n\n";
+
+            resetMatch();
+    
+            pressToContinue();
+
+            return 2;
+
+        }
+
+        else{
+
             cout << userTeam << " Won By " << targetReduced - aiScore << " Runs\n\n";
 
+            cout << userWinComments[rand() % userWinComments.size()] << "\n\n";
+
+            resetMatch();
     
-        resetMatch();
-    
-        pressToContinue();
+            pressToContinue();
+
+            return 1;
+
+        }
     
     }
 
@@ -274,6 +302,12 @@ void bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, s
             cout << aiTeam << " Won By " << 10 - aiWicket << " Wickets!\n\n";
             
             cout << userLoseComments[rand() % userLoseComments.size()] << "\n\n";
+
+            resetMatch();
+    
+            pressToContinue();
+
+            return 3;
         
         }
         
@@ -282,6 +316,12 @@ void bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, s
             cout << "Match Tied!\n\n";
             
             cout << tieComments[rand() % tieComments.size()] << "\n\n";
+
+            resetMatch();
+    
+            pressToContinue();
+
+            return 2;
         
         }
     
@@ -290,13 +330,14 @@ void bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, s
             cout << userTeam << " Won By " << target - aiScore - 1 << " Runs!\n\n";
             
             cout << userWinComments[rand() % userWinComments.size()] << "\n\n";
+
+            resetMatch();
+    
+            pressToContinue();
+
+            return 1;
         
         }
-
-    
-        resetMatch();
-    
-        pressToContinue();
 
     }
 

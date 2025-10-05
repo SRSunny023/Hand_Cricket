@@ -11,7 +11,7 @@ void playShot(int &stamina, int, string, string);
 
 void playInnings(int &temporaryBall, int, string, int &stamina, int, string, bool, int);
 
-void bat(string, string, int, int, int, string);
+int bat(string, string, int, int, int, string);
 
 
 #endif

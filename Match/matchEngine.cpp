@@ -652,6 +652,8 @@ int bowlTournament(string userTeam, string aiTeam, int ball, int temparature, in
 
 void startMatch(string userTeam,string aiTeam,int ball,int toss,int temparature,int rain,string pitch){
 
+    int matchResult;
+    
     clearScreen();
 
     if(rain >= 90 && rain <= 100){
@@ -666,13 +668,13 @@ void startMatch(string userTeam,string aiTeam,int ball,int toss,int temparature,
 
     if(toss == 1){
 
-        bat(userTeam, aiTeam, ball, temparature, rain, pitch);
+        matchResult = bat(userTeam, aiTeam, ball, temparature, rain, pitch);
 
     }
 
     else if(toss == 2){
 
-        bowl(userTeam, aiTeam, ball, temparature, rain, pitch);
+        matchResult = bowl(userTeam, aiTeam, ball, temparature, rain, pitch);
 
     }
 
@@ -681,5 +683,179 @@ void startMatch(string userTeam,string aiTeam,int ball,int toss,int temparature,
         return;
 
     }
+
+    clearScreen();
+
+    if(matchResult == 1){
+
+        cout << userWinComments[rand() % userWinComments.size()] << "\n\n";
+
+    }
+
+    else if(matchResult == 2){
+
+        cout << tieComments[rand() % tieComments.size()] << "\n\n";
+
+    }
+
+    else if(matchResult == 3){
+
+        cout << userLoseComments[rand() % userLoseComments.size()] << "\n\n";
+
+    }
+
+    else if(matchResult == 4){
+
+        cout << "Match Abandoned Due To Rain\n";
+
+    }
+
+    pressToContinue();
+
+}
+
+
+
+
+
+
+
+
+
+int tournamentMatchToss(string userTeam, string aiTeam){
+
+    int tossChoose;
+
+    do{
+
+        clearScreen();
+
+        tossChoose = getIntInput("TOSS TIME\n\n1. Head\n2. Tail\n\nEnter Your Choice: ");
+
+        if(tossChoose < 1 || tossChoose > 2){
+
+            cout << "Wrong Input! Choose Between (1 - 2)!\n";
+
+        }
+
+    }   while(tossChoose < 1 || tossChoose > 2);
+
+    int aiTossChoose = rand()%(2-1+1)+1;
+
+    if(tossChoose == aiTossChoose){
+
+        clearScreen();
+
+        cout << "Congratulations! " << userTeam << " Won The Toss!\n";
+
+        pressToContinue();
+
+        int tossDecision;
+
+        do{
+
+            clearScreen();
+            
+            tossDecision = getIntInput("What You Want To Do First!\n\n1. Bat\n2. Ball\n\nEnter Choice: ");
+
+            if(tossDecision < 1 || tossDecision > 2){
+
+                cout << "Invalid Input! Choose Between (1 - 2)!\n";
+
+            }
+
+        }   while(tossDecision < 1 || tossDecision > 2);
+
+        if(tossDecision == 1)   return 1; // 1 Indicates User Bat First
+        else    return 2; // 2 Indicates User Ball First
+
+    }
+
+    else{
+
+        int aiTossDecision = rand()%(2-1+1)+1;
+
+        if(aiTossDecision == 1) return 3; // 3 Indicates AI Won Toss And Choose Ball First
+        else    return 4;   // 4 Indicates AI Won Toss And Choose Bat First
+
+    }
+
+    return 1;
+
+}
+
+
+
+
+int tournamentMatchStart(string userTeam,string aiTeam,int ball){
+
+    clearScreen();
+    
+    string pitches[4] = {
+
+        "Green",
+
+        "Dusty",
+
+        "Hard",
+
+        "Soft",
+
+    };
+    
+    cout << "Welcome To " << userTeam << " vs " << aiTeam << " Clash!\n\n";
+
+    
+    
+    int pitchChoice = rand()%4;
+
+    int temparature = rand()%(50-10+1)+10;
+
+    int rainProbability = rand()%91;
+
+    string choosenPitch = pitches[pitchChoice];
+    
+    pitchReport(choosenPitch, temparature, rainProbability);
+
+    pressToContinue();
+
+    int toss = tournamentMatchToss(userTeam, aiTeam);
+
+    clearScreen();
+
+    if(toss == 1){
+
+        cout << userTeam << " Won The Toss And Elected To Bat First!\n\n";
+
+        pressToContinue();
+
+        return bat(userTeam, aiTeam, ball, temparature, rainProbability, choosenPitch);
+
+    }
+
+    else if(toss == 2){
+
+        cout << userTeam << " Won The Toss And Elected To Ball First!\n\n";
+
+        return bowl(userTeam, aiTeam, ball, temparature, rainProbability, choosenPitch);
+
+    }
+
+    else if(toss == 3){
+
+        cout << aiTeam << " Won The Toss And Elected To Ball First!\n\n";
+
+        return bat(userTeam, aiTeam, ball, temparature, rainProbability, choosenPitch);
+
+    }
+    else{
+
+        cout << aiTeam << " Won The Toss And Elected To Bat First!\n\n";
+
+        return bowl(userTeam, aiTeam, ball, temparature, rainProbability, choosenPitch);
+
+    }
+
+
 
 }

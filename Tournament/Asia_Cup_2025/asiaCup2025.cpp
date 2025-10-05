@@ -44,20 +44,6 @@ Tournament setupAsiaCup() {
     T.fixtures.push_back({"Malaysia", "HongKong"});
     T.fixtures.push_back({"SaudiArabia", "Nepal"});
 
-    /*
-    // Fixtures Qualifier B
-    T.fixtures.push_back({"Oman", "Bahrain"});
-    T.fixtures.push_back({"Kuwait", "UAE"});
-    T.fixtures.push_back({"Cambodia", "Kuwait"});
-    T.fixtures.push_back({"UAE", "Bahrain"});
-    T.fixtures.push_back({"Oman", "Cambodia"});
-    T.fixtures.push_back({"UAE", "Oman"});
-    T.fixtures.push_back({"Kuwait", "Bahrain"});
-    T.fixtures.push_back({"Cambodia", "Bahrain"});
-    T.fixtures.push_back({"Cambodia", "UAE"});
-    T.fixtures.push_back({"Oman", "Kuwait"});
-    */
-
     return T;
 }
 
@@ -77,7 +63,7 @@ Tournament resetTournament(const string &name) {
 
 
 
-void asiaCupMenu(string userTeam) {
+void asiaCupMenu(string userTeam, int ball) {
     
     int choice;
 
@@ -90,7 +76,7 @@ void asiaCupMenu(string userTeam) {
         
         cout << "------------------" << asia.name << " Menu ------------------\n\n\n";
 
-        cout << "Your Team: " << userTeam << " \n\n";
+        cout << "Your Team: " << userTeam << " \nOver: " << ball/6 << " Over!\n\n";
         
         cout << "1. Play Next Match\n\n2. See Fixture\n\n3. See Points Table\n\n4. Reset\n\n5. Back\n\n";
         
@@ -98,7 +84,7 @@ void asiaCupMenu(string userTeam) {
 
         switch(choice) {
             
-            case 1: clearScreen(); playNextFixture(asia, userTeam); pressToContinue(); break;
+            case 1: clearScreen(); playNextFixture(asia, userTeam, ball); pressToContinue(); break;
             
             case 2: clearScreen(); showFixtures(asia); pressToContinue(); break;
             

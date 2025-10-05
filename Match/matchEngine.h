@@ -42,6 +42,8 @@ void showWinProbabilityBar(float,string);
 int batTournament(string, string, int, int, int, string);
 int bowlTournament(string, string, int, int, int, string);
 
+int tournamentMatchStart(string,string,int);
+
 void resetProgressTournamentMatch();
 
 #endif

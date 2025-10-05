@@ -16,6 +16,6 @@ void playInnings(string, string, int &aiScore, int &aiWicket, int &stamina,
 
 void resetMatch();
 
-void bowl(string, string, int, int, int, string);
+int bowl(string, string, int, int, int, string);
 
 #endif

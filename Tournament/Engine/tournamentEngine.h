@@ -47,7 +47,7 @@ bool cmpTeam(const Team &a, const Team &b);
 
 void proceedNextStage(Tournament &T);
 
-void playNextFixture(Tournament &T, string userTeam);
+void playNextFixture(Tournament &T, string userTeam, int ball);
 
 void showFixtures(Tournament &T);
 

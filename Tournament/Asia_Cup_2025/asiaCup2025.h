@@ -6,6 +6,6 @@
 #include <iomanip>
 using namespace std;
 
-void asiaCupMenu(string userTeam);
+void asiaCupMenu(string userTeam, int ball);
 
 #endif

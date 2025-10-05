@@ -67,6 +67,8 @@ void tournamentMenu(){
 
         if(choice == 1){
             
+            int asiaCupOver;
+
             clearScreen();
 
             if(userTeam == ""){
@@ -93,7 +95,17 @@ void tournamentMenu(){
 
             }
 
-            asiaCupMenu(userTeam);
+            int choiceOver = getIntInput("Choose Over For The Asia Cup! (5,10,20,50): ");
+
+            if(choiceOver == 5) asiaCupOver = 5;
+            else if(choiceOver == 10) asiaCupOver = 10;
+            else if(choiceOver == 20) asiaCupOver = 20;
+            else if(choiceOver == 50) asiaCupOver = 50;
+            else cout << "Invalid Input! Choose (5, 10, 20, 50)!\n";
+
+            int asiaCupBall = asiaCupOver*6;
+
+            asiaCupMenu(userTeam,asiaCupBall);
 
         }
 

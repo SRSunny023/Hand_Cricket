@@ -375,7 +375,7 @@ void playInnings(int &temporaryBall, int ball, string userTeam, int &stamina, in
 
 
 
-void bat(string userTeam, string aiTeam, int ball, int temparature, int rain, string pitch){
+int bat(string userTeam, string aiTeam, int ball, int temparature, int rain, string pitch){
 
     int stamina = 100;
     
@@ -397,7 +397,7 @@ void bat(string userTeam, string aiTeam, int ball, int temparature, int rain, st
 
         pressToContinue();
 
-        bowl(userTeam, aiTeam, ball, temparature, rain, pitch);
+        return bowl(userTeam, aiTeam, ball, temparature, rain, pitch);
 
     }
 
@@ -418,6 +418,8 @@ void bat(string userTeam, string aiTeam, int ball, int temparature, int rain, st
             resetMatch();
 
             pressToContinue();
+
+            return 4; // 4 Means Match Abandoned
 
         }
 
@@ -449,13 +451,27 @@ void bat(string userTeam, string aiTeam, int ball, int temparature, int rain, st
 
                 cout << userTeam << " Won By " << 10-userWicket << " Wickets!\n\n";
 
-                cout << "Congratulations! For This Big Win!\n\n";
+                cout << userWinComments[rand() % userWinComments.size()] << "\n\n";
+
+                resetMatch();
+
+                pressToContinue();
+
+                return 1; // 1 Means User Win;
 
             }
 
-            else if(userScore == targetReduced){
+            else if(userScore == targetReduced - 1){
 
                 cout << "Match Tied!\n\n";
+                
+                cout << tieComments[rand() % tieComments.size()] << "\n\n";
+
+                resetMatch();
+
+                pressToContinue();
+
+                return 2; // 2 Means Tied
 
             }
 
@@ -463,11 +479,15 @@ void bat(string userTeam, string aiTeam, int ball, int temparature, int rain, st
 
                 cout << aiTeam << " Won By " << targetReduced-userScore << " Runs\n\n";
 
+                cout << userLoseComments[rand() % userLoseComments.size()] << "\n\n";
+
+                resetMatch();
+
+                pressToContinue();
+
+                return 3; // 3 Means Tied
+
             }
-
-            resetMatch();
-
-            pressToContinue();
         
         }
 
@@ -481,6 +501,12 @@ void bat(string userTeam, string aiTeam, int ball, int temparature, int rain, st
                 
                 cout << userWinComments[rand() % userWinComments.size()] << "\n\n";
 
+                resetMatch();
+
+                pressToContinue();
+
+                return 1;
+
             }
 
             else if(userScore == target - 1){
@@ -488,6 +514,12 @@ void bat(string userTeam, string aiTeam, int ball, int temparature, int rain, st
                 cout << "Match Tied!\n\n";
                 
                 cout << tieComments[rand() % tieComments.size()] << "\n\n";
+
+                resetMatch();
+
+                pressToContinue();
+
+                return 2;
 
             }
 
@@ -497,11 +529,13 @@ void bat(string userTeam, string aiTeam, int ball, int temparature, int rain, st
 
                 cout << userLoseComments[rand() % userLoseComments.size()] << "\n\n";
 
+                resetMatch();
+
+                pressToContinue();
+
+                return 3;
+
             }
-
-            resetMatch();
-
-            pressToContinue();
 
         }
 

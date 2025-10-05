@@ -374,7 +374,7 @@ void proceedNextStage(Tournament &T) {
 /*              : Declares winner at the end.                                                       */
 /****************************************************************************************************/
 
-void playNextFixture(Tournament &T, string userTeam) {
+void playNextFixture(Tournament &T, string userTeam, int ball) {
     
     if (T.currentMatch >= T.fixtures.size()) {
         
@@ -389,30 +389,30 @@ void playNextFixture(Tournament &T, string userTeam) {
     cout << "\nMatch " << (T.currentMatch + 1) << ": "
          << match.first << " vs " << match.second << "\n";
 
-    int s1 = rand() % 200;
     
-    int s2 = rand() % 200;
-    
-    cout << match.first << " scored: " << s1 << "\n";
-    
-    cout << match.second << " scored: " << s2 << "\n";
+    int userMatchResult;
 
-    
     string winner;
-    
-    if (s1 > s2) winner = match.first;
-    
-    else if (s2 > s1) winner = match.second;
-    
-    else{
-        
-        int win = rand()%2;
-        if(win == 0){
+
+    if (match.first == userTeam){
+
+        userMatchResult = tournamentMatchStart(match.first, match.second, ball);
+
+        if(userMatchResult == 1){
 
             winner = match.first;
 
         }
-        else{
+
+        else if(userMatchResult == 2 || userMatchResult == 4){
+
+            int num = rand()%2 + 1;
+            if(num==1)  winner = match.first;
+            else    winner = match.second;
+
+        }
+
+        else if(userMatchResult == 3){
 
             winner = match.second;
 
@@ -420,9 +420,66 @@ void playNextFixture(Tournament &T, string userTeam) {
 
     }
 
+    else if (match.second == userTeam){
+
+        userMatchResult = tournamentMatchStart(match.second, match.first, ball);
+
+        if(userMatchResult == 1){
+
+            winner = match.second;
+
+        }
+
+        else if(userMatchResult == 2 || userMatchResult == 4){
+
+            int num = rand()%2 + 1;
+            if(num==1)  winner = match.second;
+            else    winner = match.first;
+
+        }
+
+        else if(userMatchResult == 3){
+
+            winner = match.first;
+
+        }
+
+    }
+
+    else{
+
+        int s1 = rand() % 100;
     
-    cout << "Winner: " << (winner.empty() ? "TIE" : winner)
-         << " (" << s1 << " vs " << s2 << ")\n";
+        int s2 = rand() % 100;
+    
+        cout << match.first << " scored: " << s1 << "\n";
+    
+        cout << match.second << " scored: " << s2 << "\n";
+
+        if (s1 > s2) winner = match.first;
+    
+        else if (s2 > s1) winner = match.second;
+    
+        else{
+        
+            int win = rand()%2;
+            if(win == 0){
+
+                winner = match.first;
+
+            }
+            else{
+
+                winner = match.second;
+
+            }
+
+        }
+
+        cout << "Winner: " << (winner.empty() ? "TIE" : winner)
+            << " (" << s1 << " vs " << s2 << ")\n";
+
+    }
 
     
     // Update inside correct stage vector
