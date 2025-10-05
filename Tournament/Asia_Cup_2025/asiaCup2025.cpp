@@ -26,26 +26,37 @@ using namespace std;
 
 Tournament setupAsiaCup() {
     
-    Tournament T("Asia Cup");
+    Tournament T("Asia Cup", "QualifierA");
 
-    T.groupA = {Team("India"),Team("Pakistan"),Team("UAE"),Team("Oman")};
-    T.groupB = {Team("Bangladesh"),Team("SriLanka"),Team("Afghanistan"),Team("Hongkong")};
+    T.qualifierA = {Team("Nepal"),Team("HongKong"),Team("Qatar"),Team("SaudiArabia"),Team("Malaysia")};
+    T.qualifierB = {Team("Oman"),Team("UAE"),Team("Kuwait"),Team("Bahrain"),Team("Cambodia")};
 
-    // Fixtures Group A
-    T.fixtures.push_back({"India", "Pakistan"});
-    T.fixtures.push_back({"India", "UAE"});
-    T.fixtures.push_back({"India", "Oman"});
-    T.fixtures.push_back({"Pakistan", "UAE"});
-    T.fixtures.push_back({"Pakistan", "Oman"});
+
+    // Fixtures Qualifier A
+    T.fixtures.push_back({"Malaysia", "Nepal"});
+    T.fixtures.push_back({"HongKong", "Qatar"});
+    T.fixtures.push_back({"Nepal", "Qatar"});
+    T.fixtures.push_back({"Malaysia", "SaudiArabia"});
+    T.fixtures.push_back({"SaudiArabia", "HongKong"});
+    T.fixtures.push_back({"HongKong", "Nepal"});
+    T.fixtures.push_back({"Malaysia", "Qatar"});
+    T.fixtures.push_back({"Qatar", "SaudiArabia"});
+    T.fixtures.push_back({"Malaysia", "HongKong"});
+    T.fixtures.push_back({"SaudiArabia", "Nepal"});
+
+    /*
+    // Fixtures Qualifier B
+    T.fixtures.push_back({"Oman", "Bahrain"});
+    T.fixtures.push_back({"Kuwait", "UAE"});
+    T.fixtures.push_back({"Cambodia", "Kuwait"});
+    T.fixtures.push_back({"UAE", "Bahrain"});
+    T.fixtures.push_back({"Oman", "Cambodia"});
     T.fixtures.push_back({"UAE", "Oman"});
-
-    // Fixtures Group B
-    T.fixtures.push_back({"Bangladesh", "SriLanka"});
-    T.fixtures.push_back({"Bangladesh", "Afghanistan"});
-    T.fixtures.push_back({"Bangladesh", "Hongkong"});
-    T.fixtures.push_back({"SriLanka", "Afghanistan"});
-    T.fixtures.push_back({"SriLanka", "Hongkong"});
-    T.fixtures.push_back({"Afghanistan", "Hongkong"});
+    T.fixtures.push_back({"Kuwait", "Bahrain"});
+    T.fixtures.push_back({"Cambodia", "Bahrain"});
+    T.fixtures.push_back({"Cambodia", "UAE"});
+    T.fixtures.push_back({"Oman", "Kuwait"});
+    */
 
     return T;
 }
@@ -71,6 +82,7 @@ void asiaCupMenu(string userTeam) {
     int choice;
 
     static Tournament asia = setupAsiaCup();
+
     
     do {
         

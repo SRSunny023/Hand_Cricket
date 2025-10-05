@@ -23,17 +23,20 @@ struct Tournament {
     
     string name;
     
-    vector<Team> groupA, groupB, super4, semifinalists, finalists;
+    vector<Team> qualifierA,qualifierB,platesemifinalists,platethirdplace; // Asia Cup Qualifier
+    vector<Team> groupA, groupB, super4; // Asia Cup Main Round
+    vector<Team> semifinalists, finalists; // Semi Final & Final
     
     vector<pair<string,string>> fixtures;
     
     size_t currentMatch = 0;
     
     bool finished = false;
+
+    string stage;
     
-    string stage = "Group";   // Group / Super4 / Semi / Final
-    
-    Tournament(string n="") : name(n) {}
+    Tournament(string n = "", string initialStage = "QualifierA") 
+        : name(n), stage(initialStage) {}
 
 };
 
