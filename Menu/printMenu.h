@@ -3,6 +3,8 @@
 
 void printTournamentMenu();
 void printAsiaCupTeamSelection();
+void printChampionsTrophyTeamSelection();
+void printWorldCupTeamSelection();
 void printExhibitionMenu();
 void printUserTeamSelectionMenu();
 void printAiTeamSelectionMenu();

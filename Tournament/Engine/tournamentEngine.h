@@ -23,9 +23,9 @@ struct Tournament {
     
     string name;
     
-    vector<Team> qualifierA,qualifierB,platesemifinalists,platethirdplace; // Asia Cup Qualifier
-    vector<Team> groupA, groupB, super4; // Asia Cup Main Round
-    vector<Team> semifinalists, finalists; // Semi Final & Final
+    vector<Team> qualifierA,qualifierB,platesemifinalists,platethirdplace;
+    vector<Team> groupA, groupB, super4, super6;
+    vector<Team> semifinalists, finalists;
     
     vector<pair<string,string>> fixtures;
     
@@ -53,7 +53,7 @@ void showFixtures(Tournament &T);
 
 void showPointsTable(Tournament &T);
 
-Tournament loadTournament();
+Tournament loadTournament(const string &tournamentName);
 
 void saveTournament(const Tournament &T);
 

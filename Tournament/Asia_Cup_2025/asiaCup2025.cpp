@@ -55,7 +55,7 @@ Tournament setupAsiaCup() {
 
 
 
-Tournament resetTournament(const string &name) {
+Tournament resetTournamentAsiaCup(const string &name) {
     
     return setupAsiaCup();
 
@@ -77,13 +77,13 @@ void asiaCupMenu(string userTeam, int ball) {
 
     static Tournament asia;
 
-    ifstream fin("Database/tournament_save.txt");
+    ifstream fin("Database/asia_cup_save.txt");
     string tournamentName;
     if(fin >> tournamentName && !tournamentName.empty()){
 
         fin.close();
 
-        asia = loadTournament();
+        asia = loadTournament("Asia Cup");
 
         cout << "Loaded Previous Tournament!\n";
 
@@ -117,7 +117,7 @@ void asiaCupMenu(string userTeam, int ball) {
             
             case 3: clearScreen(); showPointsTable(asia); pressToContinue(); break;
             
-            case 4: clearScreen(); asia = resetTournament(asia.name); cout << "Tournament Reset!\n"; pressToContinue(); break;
+            case 4: clearScreen(); asia = resetTournamentAsiaCup(asia.name); cout << "Tournament Reset!\n"; pressToContinue(); break;
             
             case 5: clearScreen(); cout << "Returning...\n"; pressToContinue(); break;
             

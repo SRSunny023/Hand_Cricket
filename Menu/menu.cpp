@@ -5,6 +5,8 @@
 #include "utility.h"
 #include "pitchReport.h"
 #include "../Tournament/Asia_Cup_2025/asiaCup2025.h"
+#include "../Tournament/Champions_Trophy/championsTrophy.h"
+#include "../Tournament/Odi_World_Cup/wc.h"
 #include "tournamentEngine.h"
 
 
@@ -55,6 +57,34 @@ void tournamentMenu(){
                 "Pakistan",
                 "SriLanka",
                 "UAE",
+    };
+
+    string championsTrophyTeam[] = {
+                "Afghanistan",
+                "Australia",
+                "Bangladesh",
+                "England",
+                "India",
+                "NewZealand",
+                "Pakistan",
+                "SouthAfrica",
+    };
+
+    string worldCupTeam[] = {
+                "Afghanistan",
+                "Australia",
+                "Bangladesh",
+                "England",
+                "India",
+                "Ireland",
+                "NewZealand",
+                "Netherlands",
+                "Pakistan",
+                "SouthAfrica",
+                "SriLanka",
+                "Scotland",
+                "WestIndies",
+                "Zimbabwe",
     };
 
     string userTeam = "";
@@ -111,21 +141,91 @@ void tournamentMenu(){
 
         else if(choice == 2){
 
+            int championsTrophyOver;
+
             clearScreen();
 
-            cout << "Champions Trophy 2025 Under Development!\n";
+            if(userTeam == ""){
 
-            pressToContinue();
+                do{
+
+                    printChampionsTrophyTeamSelection();
+
+                    teamChoice = getIntInput("Enter Your Choice: ");
+
+                    if(teamChoice < 1 || teamChoice > 8){
+
+                        clearScreen();
+
+                        cout << "Wrong Input! Choose Between (1 - 8)!\n";
+
+                        pressToContinue();
+
+                    }
+
+                }   while(teamChoice < 1 || teamChoice > 8);
+
+                userTeam = championsTrophyTeam[teamChoice - 1];
+
+            }
+
+            int choiceOver = getIntInput("Choose Over For The Asia Cup! (5,10,20,50): ");
+
+            if(choiceOver == 5) championsTrophyOver = 5;
+            else if(choiceOver == 10) championsTrophyOver = 10;
+            else if(choiceOver == 20) championsTrophyOver = 20;
+            else if(choiceOver == 50) championsTrophyOver = 50;
+
+            else cout << "Invalid Input! Choose (5, 10, 20, 50)!\n";
+
+            int championsTrophyBall = championsTrophyOver*6;
+
+            championsTrophyMenu(userTeam,championsTrophyBall);
 
         }
 
         else if(choice == 3){
 
+            int worldCupOver;
+
             clearScreen();
 
-            cout << "ODI World Cup 2023 Under Development!\n";
+            if(userTeam == ""){
 
-            pressToContinue();
+                do{
+
+                    printWorldCupTeamSelection();
+
+                    teamChoice = getIntInput("Enter Your Choice: ");
+
+                    if(teamChoice < 1 || teamChoice > 14){
+
+                        clearScreen();
+
+                        cout << "Wrong Input! Choose Between (1 - 14)!\n";
+
+                        pressToContinue();
+
+                    }
+
+                }   while(teamChoice < 1 || teamChoice > 14);
+
+                userTeam = worldCupTeam[teamChoice - 1];
+
+            }
+
+            int choiceOver = getIntInput("Choose Over For The Asia Cup! (5,10,20,50): ");
+
+            if(choiceOver == 5) worldCupOver = 5;
+            else if(choiceOver == 10) worldCupOver = 10;
+            else if(choiceOver == 20) worldCupOver = 20;
+            else if(choiceOver == 50) worldCupOver = 50;
+
+            else cout << "Invalid Input! Choose (5, 10, 20, 50)!\n";
+
+            int worldCupBall = worldCupOver*6;
+
+            worldCupMenu(userTeam,worldCupBall);
 
         }
 

@@ -67,6 +67,66 @@ void printAsiaCupTeamSelection(){
 
 
 
+void printChampionsTrophyTeamSelection(){
+
+    clearScreen();
+
+    cout << "----------------------------------------------------------------------------\n";
+    cout << "|                    Champions Trophy Team Selection                       |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 1. Afghanistan                                                           |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 2. Australia                                                             |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 3. Bangladesh                                                            |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 4. England                                                               |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 5. India                                                                 |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 6. New Zealand                                                           |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 7. Pakistan                                                              |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 8. South Africa                                                          |\n";
+    cout << "|                                                                          |\n";
+    cout << "----------------------------------------------------------------------------\n";
+
+}
+
+
+
+void printWorldCupTeamSelection(){
+
+    clearScreen();
+
+    cout << "----------------------------------------------------------------------------\n";
+    cout << "|                       World Cup Team Selection                           |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 1.  Afghanistan                                                          |\n";
+    cout << "| 2.  Australia                                                            |\n";
+    cout << "| 3.  Bangladesh                                                           |\n";
+    cout << "| 4.  England                                                              |\n";
+    cout << "| 5.  India                                                                |\n";
+    cout << "| 6.  Ireland                                                              |\n";
+    cout << "| 7.  New Zealand                                                          |\n";
+    cout << "| 8.  Netherlands                                                          |\n";
+    cout << "| 9.  Pakistan                                                             |\n";
+    cout << "| 10. South Africa                                                         |\n";
+    cout << "| 11. Sri Lanka                                                            |\n";
+    cout << "| 12. Scotland                                                             |\n";
+    cout << "| 13. West Indies                                                          |\n";
+    cout << "| 14. Zimbabwe                                                             |\n";
+    cout << "|                                                                          |\n";
+    cout << "----------------------------------------------------------------------------\n";
+
+}
+
+
+
+
+
+
 
 
 
