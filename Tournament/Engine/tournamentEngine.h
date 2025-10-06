@@ -53,4 +53,8 @@ void showFixtures(Tournament &T);
 
 void showPointsTable(Tournament &T);
 
+Tournament loadTournament();
+
+void saveTournament(const Tournament &T);
+
 #endif

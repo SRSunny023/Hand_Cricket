@@ -7,6 +7,9 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#include <cstdlib>
+#include <SFML/Audio.hpp>
+#include <thread>
 using namespace std;
 
 
@@ -20,6 +23,24 @@ using namespace std;
 #define YELLOW  "\033[1;33m"
 #define BLUE    "\033[1;34m"
 #define WHITE   "\033[1;37m"
+
+
+string commentary;
+
+
+
+
+
+
+void speak(const std::string &text) {
+    
+    std::string cmd = "espeak \"" + text + "\"";
+    
+    system(cmd.c_str());
+
+}
+
+
 
 
 
@@ -407,7 +428,7 @@ void scoreCard(int score, int wicket, int ballCount, int target, string teamName
 
 
 void scoreLogic(int &stamina, int batChoice, int who, int temperature, string ballType, string pitchType) {
-
+    
     // -------------------- Pitch & Ball Modifiers --------------------
     
     float scoreMultiplier = 1.0;
@@ -629,9 +650,12 @@ void scoreLogic(int &stamina, int batChoice, int who, int temperature, string ba
     
     // -------------------- Update Score --------------------
     
+
     if (out) {
         
-        cout << "Commentary: " << wicketCommentary[rand() % wicketCommentary.size()] << "\n";
+        commentary = wicketCommentary[rand() % runCommentary.size()];
+        
+        cout << "Commentary: " << commentary << "\n";
         
         cout << "Shot Played: " << shot << "\n";
         
@@ -640,6 +664,8 @@ void scoreLogic(int &stamina, int batChoice, int who, int temperature, string ba
         if (who == 1) userWicket++;
         
         else aiWicket++;
+
+        speak(commentary);
     
     }
     
@@ -649,13 +675,45 @@ void scoreLogic(int &stamina, int batChoice, int who, int temperature, string ba
         
         else aiScore += runs;
 
-        if (runs == 6) cout << "Commentary: " << sixCommentary[rand() % sixCommentary.size()] << "\n";
+        if (runs == 6){
+
+            commentary = sixCommentary[rand() % sixCommentary.size()];
+            
+            cout << "Commentary: " << commentary << "\n";
+
+            speak(commentary);
+
+        } 
         
-        else if (runs == 4) cout << "Commentary: " << fourCommentary[rand() % fourCommentary.size()] << "\n";
+        else if (runs == 4){
+            
+            commentary = fourCommentary[rand() % fourCommentary.size()];
+
+            cout << "Commentary: " << commentary << "\n";
+
+            speak(commentary);
+
+        }
         
-        else if (runs > 0) cout << "Commentary: " << runCommentary[rand() % runCommentary.size()] << "\n";
+        else if (runs > 0){
+
+            commentary = runCommentary[rand() % runCommentary.size()];
+
+            cout << "Commentary: " << commentary << "\n";
+
+            speak(commentary);
+
+        }
         
-        else cout << "Commentary: " << dotBallCommentary[rand() % dotBallCommentary.size()] << "\n";
+        else{
+
+            commentary = dotBallCommentary[rand() % dotBallCommentary.size()];
+
+            cout << "Commentary: " << commentary << "\n";
+
+            speak(commentary);
+
+        }
 
         cout << "Shot Played: " << shot << "\n";
         

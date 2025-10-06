@@ -23,4 +23,8 @@ vector<User> loadUsers();
 
 void userMenu(User &loggedInUser, vector<User> &allUsers);
 
+string decode(const string &data, char key = 123);
+
+string encode(const string &data, char key = 123);
+
 #endif

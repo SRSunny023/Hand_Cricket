@@ -15,7 +15,13 @@
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
+#include <fstream>
 using namespace std;
+
+
+
+
+
 
 
 
@@ -47,6 +53,8 @@ Tournament setupAsiaCup() {
     return T;
 }
 
+
+
 Tournament resetTournament(const string &name) {
     
     return setupAsiaCup();
@@ -67,7 +75,26 @@ void asiaCupMenu(string userTeam, int ball) {
     
     int choice;
 
-    static Tournament asia = setupAsiaCup();
+    static Tournament asia;
+
+    ifstream fin("Database/tournament_save.txt");
+    string tournamentName;
+    if(fin >> tournamentName && !tournamentName.empty()){
+
+        fin.close();
+
+        asia = loadTournament();
+
+        cout << "Loaded Previous Tournament!\n";
+
+        pressToContinue();
+
+    }
+    else{
+
+        asia = setupAsiaCup();
+
+    }
 
     
     do {
@@ -84,7 +111,7 @@ void asiaCupMenu(string userTeam, int ball) {
 
         switch(choice) {
             
-            case 1: clearScreen(); playNextFixture(asia, userTeam, ball); pressToContinue(); break;
+            case 1: clearScreen(); playNextFixture(asia, userTeam, ball); pressToContinue(); saveTournament(asia); break;
             
             case 2: clearScreen(); showFixtures(asia); pressToContinue(); break;
             

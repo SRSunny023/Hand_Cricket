@@ -15,6 +15,43 @@ using namespace std;
 
 
 
+sf::SoundBuffer hitBuffer;
+
+
+void loadSounds() {
+    if (!hitBuffer.loadFromFile("Sound/hit.wav")) {
+        cout << "Failed to load hit.wav\n";
+    } else {
+        cout << "hit.wav loaded successfully\n";
+    }
+}
+
+std::vector<sf::Sound> activeSounds;
+
+void playHitSoundAndWait() {
+    sf::Sound sound;
+    sound.setBuffer(hitBuffer);
+    sound.play();
+
+    // Wait until the sound finishes
+    while (sound.getStatus() == sf::Sound::Playing) {
+        sf::sleep(sf::milliseconds(10)); // small sleep to avoid busy-wait
+    }
+}
+
+// In your main loop or some periodic function:
+void cleanupSounds() {
+    activeSounds.erase(
+        std::remove_if(activeSounds.begin(), activeSounds.end(),
+                       [](sf::Sound &s){ return s.getStatus() == sf::Sound::Stopped; }),
+        activeSounds.end());
+}
+
+
+
+
+
+
 
 
 
@@ -305,7 +342,11 @@ void playShot(int &stamina, int temparature, string bowlType, string pitch){
 
     }
 
+    playHitSoundAndWait();
+
     scoreLogic(stamina,batChoice-1,1,temparature,bowlType,pitch);
+
+    cleanupSounds();
 
     pressToContinue();
 

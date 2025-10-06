@@ -31,6 +31,47 @@ const string sessionFile = "Database/session.txt";   // Session Login or Logged 
 
 
 
+/****************************************************************************************************/
+/* Function Name: encode                                                                            */
+/*                                                                                                  */
+/* Inputs       : const string,char                                                                 */
+/*                                                                                                  */
+/* Returns      : string                                                                            */
+/*                                                                                                  */
+/* Note         : This Function encode data                                                         */
+/****************************************************************************************************/
+
+string encode(const string &data, char key) {
+    
+    string encoded = data;
+    
+    for (char &c : encoded) {
+        
+        c ^= key;  // XOR each character
+    
+    }
+    
+    return encoded;
+
+}
+
+
+
+/****************************************************************************************************/
+/* Function Name: decode                                                                            */
+/*                                                                                                  */
+/* Inputs       : const string,char                                                                 */
+/*                                                                                                  */
+/* Returns      : string                                                                            */
+/*                                                                                                  */
+/* Note         : This Function decode data                                                         */
+/****************************************************************************************************/
+
+string decode(const string &data, char key) {
+    
+    return encode(data, key); // XOR twice = original
+
+}
 
 
 
@@ -46,9 +87,17 @@ const string sessionFile = "Database/session.txt";   // Session Login or Logged 
 
 void saveSession(const string &username) {
     
-    ofstream fout(sessionFile);
+    string encoded = encode(username);
     
-    if (fout) fout << username;
+    ofstream fout(sessionFile, ios::binary);
+    
+    if (fout){
+
+        fout << encoded;
+
+        fout.close();
+
+    }
 
 }
 
@@ -72,11 +121,24 @@ void saveSession(const string &username) {
 
 string loadSession() {
     
-    ifstream fin(sessionFile);
+    ifstream fin(sessionFile, ios::binary);
+
+    string encoded;
     
-    string username;
+    char c;
     
-    if (fin) fin >> username;
+    while (fin.get(c)) {
+        
+        encoded += c;
+    
+    }
+    
+    fin.close();
+    
+    string username = decode(encoded);
+    
+    if (!username.empty() && username.back() == '\n')
+        username.pop_back();
     
     return username;
 

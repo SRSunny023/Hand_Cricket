@@ -2,6 +2,7 @@
 #include "../../Match/matchEngine.h"
 #include "../../Authentication/loginSystem.h"
 #include "../../Utility/utility.h"
+#include "../Asia_Cup_2025/asiaCup2025.h"
 
 
 
@@ -14,6 +15,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
+#include <fstream>
+#include <limits>
 using namespace std;
 
 
@@ -859,24 +862,118 @@ void showPointsTable(Tournament &T) {
 
 
 
-
-
-
-/****************************************************************************************************/
-/* Function Name: resetTournament                                                                   */
-/*                                                                                                  */
-/* Inputs       : const string                                                                      */
-/*                                                                                                  */
-/* Returns      : struct                                                                            */
-/*                                                                                                  */
-/* Note         : This function reset the tournament progress                                       */
-/****************************************************************************************************/
-/*
-Tournament resetTournament(const string &name) {
+void saveTournament(const Tournament &T) {
     
-    if (name == "Asia Cup") return setupAsiaCup();
+    stringstream buffer;
+
+    buffer << T.name << "\n";
+    buffer << T.stage << "\n";
+    buffer << T.currentMatch << "\n";
+    buffer << T.finished << "\n";
+
+    auto saveTeams = [&](const vector<Team>& teams) {
+        buffer << teams.size() << "\n";
+        for (auto &t : teams) {
+            buffer << t.name << " " << t.played << " " << t.won << " "
+                   << t.lost << " " << t.points << "\n";
+        }
+    };
+
+    saveTeams(T.qualifierA);
+    saveTeams(T.qualifierB);
+    saveTeams(T.platesemifinalists);
+    saveTeams(T.platethirdplace);
+    saveTeams(T.groupA);
+    saveTeams(T.groupB);
+    saveTeams(T.super4);
+    saveTeams(T.finalists);
+
+    buffer << T.fixtures.size() << "\n";
+    for (auto &f : T.fixtures) {
+        buffer << f.first << "," << f.second << "\n";
+    }
+
+
+    string encoded = encode(buffer.str());
+
+    ofstream file("Database/tournament_save.txt", ios::binary);
     
-    return setupChampionsTrophy();
+    file << encoded;
+    
+    file.close();
+
+    cout << "Tournament saved!\n";
 
 }
-*/
+
+
+Tournament loadTournament() {
+    
+    ifstream file("Database/tournament_save.txt", ios::binary);
+    
+    string encoded;
+    
+    char c;
+    
+    while (file.get(c)) {
+        
+        encoded += c;
+    
+    }
+    
+    file.close();
+
+
+    string decoded = decode(encoded);
+    
+    stringstream buffer(decoded);
+
+    Tournament T;
+
+    getline(buffer, T.name);
+    
+    getline(buffer, T.stage);
+    
+    buffer >> T.currentMatch;
+    
+    buffer >> T.finished;
+
+    auto loadTeams = [&](vector<Team>& teams) {
+        size_t n;
+        buffer >> n;
+        teams.clear();
+        for (size_t i = 0; i < n; i++) {
+            Team temp;
+            buffer >> temp.name >> temp.played >> temp.won >> temp.lost >> temp.points;
+            teams.push_back(temp);
+        }
+    };
+
+    loadTeams(T.qualifierA);
+    loadTeams(T.qualifierB);
+    loadTeams(T.platesemifinalists);
+    loadTeams(T.platethirdplace);
+    loadTeams(T.groupA);
+    loadTeams(T.groupB);
+    loadTeams(T.super4);
+    loadTeams(T.finalists);
+
+    size_t fixtureCount;
+    
+    buffer >> fixtureCount;
+    
+    buffer.ignore();
+
+    T.fixtures.clear();
+    for (size_t i = 0; i < fixtureCount; i++) {
+        string line;
+        getline(buffer, line);
+        size_t comma = line.find(',');
+        T.fixtures.push_back({line.substr(0, comma), line.substr(comma + 1)});
+    }
+
+    cout << "Tournament loaded!\n";
+    
+    return T;
+
+}
