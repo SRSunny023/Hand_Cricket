@@ -124,6 +124,40 @@ void printWorldCupTeamSelection(){
 
 
 
+void printT20WorldCupTeamSelection(){
+
+    clearScreen();
+
+    cout << "----------------------------------------------------------------------------\n";
+    cout << "|                      T20 World Cup Team Selection                        |\n";
+    cout << "|                                                                          |\n";
+    cout << "| 1.  Afghanistan                                                          |\n";
+    cout << "| 2.  Australia                                                            |\n";
+    cout << "| 3.  Bangladesh                                                           |\n";
+    cout << "| 4.  Canada                                                               |\n";
+    cout << "| 5.  England                                                              |\n";
+    cout << "| 6.  India                                                                |\n";
+    cout << "| 7.  Ireland                                                              |\n";
+    cout << "| 8.  Namibia                                                              |\n";
+    cout << "| 9.  Nepal                                                                |\n";
+    cout << "| 10. New Zealand                                                          |\n";
+    cout << "| 11. Netherlands                                                          |\n";
+    cout << "| 12. Oman                                                                 |\n";
+    cout << "| 13. Pakistan                                                             |\n";
+    cout << "| 14. South Africa                                                         |\n";
+    cout << "| 15. Sri Lanka                                                            |\n";
+    cout << "| 16. Scotland                                                             |\n";
+    cout << "| 17. UAE                                                                  |\n";
+    cout << "| 18. USA                                                                  |\n";
+    cout << "| 19. West Indies                                                          |\n";
+    cout << "| 20. Zimbabwe                                                             |\n";
+    cout << "|                                                                          |\n";
+    cout << "----------------------------------------------------------------------------\n";
+
+}
+
+
+
 
 
 

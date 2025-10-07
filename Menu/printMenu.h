@@ -5,6 +5,7 @@ void printTournamentMenu();
 void printAsiaCupTeamSelection();
 void printChampionsTrophyTeamSelection();
 void printWorldCupTeamSelection();
+void printT20WorldCupTeamSelection();
 void printExhibitionMenu();
 void printUserTeamSelectionMenu();
 void printAiTeamSelectionMenu();

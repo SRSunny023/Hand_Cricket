@@ -553,6 +553,112 @@ void proceedNextStage(Tournament &T) {
         }
 
     }
+
+    else if (T.name == "T20 World Cup"){
+
+        if (T.stage == "Group") {
+            
+            sort(T.groupA.begin(), T.groupA.end(), cmpTeam);
+            sort(T.groupB.begin(), T.groupB.end(), cmpTeam);
+            sort(T.groupC.begin(), T.groupC.end(), cmpTeam);
+            sort(T.groupD.begin(), T.groupD.end(), cmpTeam);
+
+
+            T.super8A = {T.groupA[0], T.groupB[1], T.groupC[0], T.groupD[1]};
+            T.super8B = {T.groupA[1], T.groupB[0], T.groupC[1], T.groupD[0]};
+
+
+            
+            auto resetStats=[&](vector<Team> &g){ for(auto &t:g) t.played=t.points=t.won=t.lost=0; };
+            
+            resetStats(T.super8A);
+            
+            resetStats(T.super8B);
+
+
+            T.fixtures.clear();
+            auto makeFixtures=[&](vector<Team> &g){
+                for(size_t i=0;i<g.size();i++)
+                    for(size_t j=i+1;j<g.size();j++)
+                        T.fixtures.push_back({g[i].name,g[j].name});
+            };
+            makeFixtures(T.super8A);
+            makeFixtures(T.super8B);
+
+            T.stage = "Super8";
+            T.currentMatch = 0;
+            cout << ">>> Proceeding to Super 8!\n";
+    
+        }
+
+        else if (T.stage == "Super8") {
+            
+            sort(T.super8A.begin(), T.super8A.end(), cmpTeam);
+            sort(T.super8B.begin(), T.super8B.end(), cmpTeam);
+
+            T.semifinalists = {T.super8A[0], T.super8A[1], T.super8B[0], T.super8B[1]};
+
+            T.fixtures.clear();
+
+            for (auto &f : T.semifinalists) {
+                f.played = 0;
+                f.won = 0;
+                f.lost = 0;
+                f.points = 0;
+            }
+
+            T.fixtures.push_back({T.semifinalists[0].name, T.semifinalists[3].name});
+            T.fixtures.push_back({T.semifinalists[1].name, T.semifinalists[2].name});
+
+            T.stage = "SemiFinal";
+            T.currentMatch = 0;
+            cout << ">>> Proceeding to Semi Finals!\n";
+    
+        }
+
+        else if (T.stage == "SemiFinal"){
+        
+            vector<Team> winners;
+            
+            for (auto &t : T.semifinalists) {
+                if (t.won > 0) winners.push_back(t);
+            }
+
+            if (winners.size() < 2) {
+                cout << ">>> Waiting for all Semi Final matches to finish...\n";
+                return;
+            }
+
+            T.finalists = {winners[0], winners[1]};
+            
+            for (auto &f : T.finalists) {
+                f.played = 0;
+                f.won = 0;
+                f.lost = 0;
+                f.points = 0;
+            }
+
+            T.fixtures = {{T.finalists[0].name, T.finalists[1].name}};
+            T.stage = "Final";
+            T.currentMatch = 0;
+
+            cout << ">>> Proceeding to Final!\n";
+
+        }
+
+        else if (T.stage == "Final") {
+        
+            cout << ">>> Tournament Winner: "
+                << (T.finalists[0].points > T.finalists[1].points
+                        ? T.finalists[0].name
+                        : T.finalists[1].name)
+                << "\n";
+        
+            T.finished = true;
+    
+        }
+
+    }
  
 }
 
@@ -787,6 +893,42 @@ void playNextFixture(Tournament &T, string userTeam, int ball) {
         else if (T.stage == "QualifierB") updateStats(T.qualifierB);
 
         else if (T.stage == "Super6") updateStats(T.super6);
+    
+        else if (T.stage == "SemiFinal") updateStats(T.semifinalists);
+    
+        else if (T.stage == "Final") updateStats(T.finalists);
+
+        T.currentMatch++;
+
+        if (T.currentMatch >= T.fixtures.size()) {
+        
+            proceedNextStage(T);
+    
+        }
+
+    }
+
+    else if (T.name == "T20 World Cup"){
+    
+        if (T.stage == "Group") {
+        
+            updateStats(T.groupA);
+        
+            updateStats(T.groupB);
+
+            updateStats(T.groupC);
+        
+            updateStats(T.groupD);
+    
+        }
+
+        else if (T.stage == "Super8") {
+        
+            updateStats(T.super8A);
+        
+            updateStats(T.super8B);
+    
+        }
     
         else if (T.stage == "SemiFinal") updateStats(T.semifinalists);
     
@@ -1342,6 +1484,220 @@ void showPointsTable(Tournament &T) {
 
     }
 
+    if (T.name == "T20 World Cup"){
+
+        if (T.stage == "Group") {
+        
+            vector<Team> groupAcopy = T.groupA;
+            vector<Team> groupBcopy = T.groupB;
+            vector<Team> groupCcopy = T.groupC;
+            vector<Team> groupDcopy = T.groupD;
+
+            sort(groupAcopy.begin(), groupAcopy.end(), cmpTeam);
+            sort(groupBcopy.begin(), groupBcopy.end(), cmpTeam);
+            sort(groupCcopy.begin(), groupCcopy.end(), cmpTeam);
+            sort(groupDcopy.begin(), groupDcopy.end(), cmpTeam);
+        
+            cout << YELLOW << "╔═══════════════════════════════╗\n";
+            cout << "║ " << YELLOW << setw(30) << left << "Points Table" << "║\n";
+            cout << "╠═══════════════════════════════╣\n";
+
+            
+            cout << YELLOW << "╠═══════════════════════════════╣\n";
+            cout << "║ " << RED << T.name << " " << GREEN << T.stage << " Group - A:" << YELLOW << "     ║\n";
+            cout << "╠═══════════════════════════════╣\n";
+    
+            cout << WHITE <<  left << setw(20) << "Team"
+                << setw(8) << "Played" 
+                << setw(8) << "Won" 
+                << setw(8) << "Lost" 
+                << setw(8) << "Points" << "\n";
+    
+            for (auto &t : groupAcopy) {
+        
+                cout << GREEN << left << setw(20) << t.name
+                    << setw(8) << t.played
+                    << setw(8) << t.won
+                    << setw(8) << t.lost
+                    << setw(8) << t.points << "\n";
+    
+            }
+
+            cout << YELLOW << "╔═══════════════════════════════╗\n";
+            cout << "║ " << YELLOW << setw(30) << left << "Points Table" << "║\n";
+            cout << "╠═══════════════════════════════╣\n";
+
+
+            cout << YELLOW << "╠═══════════════════════════════╣\n";
+            cout << "║ " << RED << T.name << " " << BLUE << T.stage << " Group - B:" << YELLOW << "     ║\n";
+            cout << "╠═══════════════════════════════╣\n";
+    
+            cout << WHITE << left << setw(20) << "Team" 
+                << setw(8) << "Played" 
+                << setw(8) << "Won" 
+                << setw(8) << "Lost" 
+                << setw(8) << "Points" << "\n";
+    
+            for (auto &t : groupBcopy) {
+        
+                cout << BLUE << left << setw(20) << t.name
+                    << setw(8) << t.played
+                    << setw(8) << t.won
+                    << setw(8) << t.lost
+                    << setw(8) << t.points << "\n" << RESET;
+    
+            }
+
+            cout << YELLOW << "╔═══════════════════════════════╗\n";
+            cout << "║ " << YELLOW << setw(30) << left << "Points Table" << "║\n";
+            cout << "╠═══════════════════════════════╣\n";
+
+
+            cout << YELLOW << "╠═══════════════════════════════╣\n";
+            cout << "║ " << RED << T.name << " " << BLUE << T.stage << " Group - C:" << YELLOW << "     ║\n";
+            cout << "╠═══════════════════════════════╣\n";
+    
+            cout << WHITE << left << setw(20) << "Team" 
+                << setw(8) << "Played" 
+                << setw(8) << "Won" 
+                << setw(8) << "Lost" 
+                << setw(8) << "Points" << "\n";
+    
+            for (auto &t : groupCcopy) {
+        
+                cout << BLUE << left << setw(20) << t.name
+                    << setw(8) << t.played
+                    << setw(8) << t.won
+                    << setw(8) << t.lost
+                    << setw(8) << t.points << "\n" << RESET;
+    
+            }
+
+            cout << YELLOW << "╔═══════════════════════════════╗\n";
+            cout << "║ " << YELLOW << setw(30) << left << "Points Table" << "║\n";
+            cout << "╠═══════════════════════════════╣\n";
+
+
+            cout << YELLOW << "╠═══════════════════════════════╣\n";
+            cout << "║ " << RED << T.name << " " << BLUE << T.stage << " Group - D:" << YELLOW << "     ║\n";
+            cout << "╠═══════════════════════════════╣\n";
+    
+            cout << WHITE << left << setw(20) << "Team" 
+                << setw(8) << "Played" 
+                << setw(8) << "Won" 
+                << setw(8) << "Lost" 
+                << setw(8) << "Points" << "\n";
+    
+            for (auto &t : groupDcopy) {
+        
+                cout << BLUE << left << setw(20) << t.name
+                    << setw(8) << t.played
+                    << setw(8) << t.won
+                    << setw(8) << t.lost
+                    << setw(8) << t.points << "\n" << RESET;
+    
+            }
+        
+            return;
+    
+        }
+        
+        if (T.stage == "Super8") {
+        
+            vector<Team> super8Acopy = T.super8A;
+            vector<Team> super8Bcopy = T.super8B;
+        
+            sort(super8Acopy.begin(), super8Acopy.end(), cmpTeam);
+            sort(super8Bcopy.begin(), super8Bcopy.end(), cmpTeam);
+        
+            cout << YELLOW << "╔═══════════════════════════════╗\n";
+            cout << "║ " << YELLOW << setw(30) << left << "Points Table" << "║\n";
+            cout << "╠═══════════════════════════════╣\n";
+
+
+            cout << YELLOW << "╠═══════════════════════════════╣\n";
+            cout << "║ " << RED << T.name << " " << BLUE << T.stage << YELLOW << "               ║\n";
+            cout << "╠═══════════════════════════════╣\n";
+        
+            cout << WHITE << left << setw(20) << "Team" 
+                << setw(8) << "Played" 
+                << setw(8) << "Won" 
+                << setw(8) << "Lost" 
+                << setw(8) << "Points" << "\n";
+        
+            for (auto &t : super8Acopy) {
+            
+                cout << CYAN << left << setw(20) << t.name
+                    << setw(8) << t.played
+                    << setw(8) << t.won
+                    << setw(8) << t.lost
+                    << setw(8) << t.points << "\n" << RESET;
+        
+            }
+
+            cout << YELLOW << "╔═══════════════════════════════╗\n";
+            cout << "║ " << YELLOW << setw(30) << left << "Points Table" << "║\n";
+            cout << "╠═══════════════════════════════╣\n";
+
+
+            cout << YELLOW << "╠═══════════════════════════════╣\n";
+            cout << "║ " << RED << T.name << " " << BLUE << T.stage << YELLOW << "               ║\n";
+            cout << "╠═══════════════════════════════╣\n";
+        
+            cout << WHITE << left << setw(20) << "Team" 
+                << setw(8) << "Played" 
+                << setw(8) << "Won" 
+                << setw(8) << "Lost" 
+                << setw(8) << "Points" << "\n";
+        
+            for (auto &t : super8Bcopy) {
+            
+                cout << CYAN << left << setw(20) << t.name
+                    << setw(8) << t.played
+                    << setw(8) << t.won
+                    << setw(8) << t.lost
+                    << setw(8) << t.points << "\n" << RESET;
+        
+            }
+        
+            return;
+    
+        }
+
+        if (T.stage == "SemiFinal") {
+
+            cout << YELLOW << "╠═══════════════════════════════╣\n";
+            cout << "║ " << RED << T.name << " " << GREEN << T.stage << "Finalist!" << YELLOW << "   ║\n";
+            cout << "╠═══════════════════════════════╣\n";
+        
+            for (auto &t : T.semifinalists) {
+            
+                cout << RED << t.name << GREEN << " (Points: " << t.points << ", Won: " << t.won << ")\n" << RESET;
+        
+            }
+        
+            return;
+    
+        }
+
+        if (T.stage == "Final") {
+        
+            cout << YELLOW << "╠═══════════════════════════════╣\n";
+            cout << "║ " << RED << T.name << " " << GREEN << T.stage << "Finalist!" << YELLOW << "       ║\n";
+            cout << "╠═══════════════════════════════╣\n";
+        
+            for (auto &t : T.finalists) {
+            
+                cout << RED << t.name << GREEN << " (Points: " << t.points << ", Won: " << t.won << ")\n" << RESET;
+        
+            }
+        
+            return;
+    
+        }
+
+    }
+
 }
 
 
@@ -1364,6 +1720,8 @@ void saveTournament(const Tournament &T) {
         fileName = "Database/champions_trophy_save.txt";
     else if (T.name == "World Cup")
         fileName = "Database/world_cup_save.txt";
+    else if (T.name == "T20 World Cup")
+        fileName = "Database/t20_world_cup_save.txt";
     else
         fileName = "Database/tournament_save.txt";
     
@@ -1416,6 +1774,19 @@ void saveTournament(const Tournament &T) {
 
     }
 
+    else if (T.name == "T20 World Cup"){
+
+        saveTeams(T.groupA);
+        saveTeams(T.groupB);
+        saveTeams(T.groupC);
+        saveTeams(T.groupD);
+        saveTeams(T.super8A);
+        saveTeams(T.super8B);
+        saveTeams(T.semifinalists);
+        saveTeams(T.finalists);
+
+    }
+
     
 
     buffer << T.fixtures.size() << "\n";
@@ -1447,6 +1818,8 @@ Tournament loadTournament(const string &tournamentName) {
         fileName = "Database/champions_trophy_save.txt";
     else if (tournamentName == "World Cup")
         fileName = "Database/world_cup_save.txt";
+    else if (tournamentName == "T20 World Cup")
+        fileName = "Database/t20_world_cup_save.txt";
     else
         fileName = "Database/tournament_save.txt";
 
@@ -1517,6 +1890,19 @@ Tournament loadTournament(const string &tournamentName) {
         loadTeams(T.qualifierA);
         loadTeams(T.qualifierB);
         loadTeams(T.super6);
+        loadTeams(T.semifinalists);
+        loadTeams(T.finalists);
+
+    }
+
+    else if (tournamentName == "T20 World Cup"){
+
+        loadTeams(T.groupA);
+        loadTeams(T.groupB);
+        loadTeams(T.groupC);
+        loadTeams(T.groupD);
+        loadTeams(T.super8A);
+        loadTeams(T.super8B);
         loadTeams(T.semifinalists);
         loadTeams(T.finalists);
 

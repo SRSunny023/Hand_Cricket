@@ -24,7 +24,7 @@ struct Tournament {
     string name;
     
     vector<Team> qualifierA,qualifierB,platesemifinalists,platethirdplace;
-    vector<Team> groupA, groupB, super4, super6;
+    vector<Team> groupA, groupB, groupC, groupD, super4, super6, super8A, super8B;
     vector<Team> semifinalists, finalists;
     
     vector<pair<string,string>> fixtures;

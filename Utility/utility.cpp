@@ -35,9 +35,14 @@ void pressToContinue() {
 /* Note         : This Function Clear The Console Screen                                            */
 /****************************************************************************************************/
 
-void clearScreen() {
+int clearScreen() {
     
-    cout << "\033[H\033[J";
+    #ifdef _WIN32
+        system("cls");
+    #else
+        cout << "\033[H\033[J";
+    #endif
+        return 0;
 
 }
 

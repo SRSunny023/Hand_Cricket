@@ -6,7 +6,7 @@
 #include <vector>
 using namespace std;
 
-void clearScreen();
+int clearScreen();
 void pressToContinue();
 int getIntInput(const string &prompt);
 string getEmailInput(const string &prompt);

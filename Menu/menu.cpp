@@ -7,6 +7,7 @@
 #include "../Tournament/Asia_Cup_2025/asiaCup2025.h"
 #include "../Tournament/Champions_Trophy/championsTrophy.h"
 #include "../Tournament/Odi_World_Cup/wc.h"
+#include "../Tournament/T20_World_Cup/t20wc.h"
 #include "tournamentEngine.h"
 
 
@@ -83,6 +84,29 @@ void tournamentMenu(){
                 "SouthAfrica",
                 "SriLanka",
                 "Scotland",
+                "WestIndies",
+                "Zimbabwe",
+    };
+
+    string t20WorldCupTeam[] = {
+                "Afghanistan",
+                "Australia",
+                "Bangladesh",
+                "Canada",
+                "England",
+                "India",
+                "Ireland",
+                "Namibia",
+                "Nepal",
+                "NewZealand",
+                "Netherlands",
+                "Oman",
+                "Pakistan",
+                "SouthAfrica",
+                "SriLanka",
+                "Scotland",
+                "UAE",
+                "USA",
                 "WestIndies",
                 "Zimbabwe",
     };
@@ -231,11 +255,46 @@ void tournamentMenu(){
 
         else if(choice == 4){
 
+            int t20WorldCupOver;
+
             clearScreen();
 
-            cout << "T20 World Cup 2024 Under Development!\n";
+            if(userTeam == ""){
 
-            pressToContinue();
+                do{
+
+                    printT20WorldCupTeamSelection();
+
+                    teamChoice = getIntInput("Enter Your Choice: ");
+
+                    if(teamChoice < 1 || teamChoice > 20){
+
+                        clearScreen();
+
+                        cout << "Wrong Input! Choose Between (1 - 20)!\n";
+
+                        pressToContinue();
+
+                    }
+
+                }   while(teamChoice < 1 || teamChoice > 20);
+
+                userTeam = t20WorldCupTeam[teamChoice - 1];
+
+            }
+
+            int choiceOver = getIntInput("Choose Over For The Asia Cup! (5,10,20,50): ");
+
+            if(choiceOver == 5) t20WorldCupOver = 5;
+            else if(choiceOver == 10) t20WorldCupOver = 10;
+            else if(choiceOver == 20) t20WorldCupOver = 20;
+            else if(choiceOver == 50) t20WorldCupOver = 50;
+
+            else cout << "Invalid Input! Choose (5, 10, 20, 50)!\n";
+
+            int t20WorldCupBall = t20WorldCupOver*6;
+
+            t20WorldCupMenu(userTeam,t20WorldCupBall);
 
         }
 
