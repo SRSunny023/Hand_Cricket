@@ -1,8 +1,9 @@
 #include "tournamentEngine.h"
+#include "../../Authentication/authentication.h"
 #include "../../Match/matchEngine.h"
-#include "../../Authentication/loginSystem.h"
 #include "../../Utility/utility.h"
 #include "../Asia_Cup_2025/asiaCup2025.h"
+#include "../../Menu/main_menu.h"
 
 
 
@@ -790,6 +791,8 @@ void playNextFixture(Tournament &T, string userTeam, int ball) {
         cout << "Winner: " << (winner.empty() ? "TIE" : winner)
             << " (" << s1 << " vs " << s2 << ")\n";
 
+        speak("Congratulations " + winner + " Won The Match Successfully!");
+    
     }
 
     
@@ -1711,7 +1714,6 @@ void showPointsTable(Tournament &T) {
 
 
 void saveTournament(const Tournament &T) {
-    
     string fileName;
 
     if (T.name == "Asia Cup")
@@ -1724,9 +1726,7 @@ void saveTournament(const Tournament &T) {
         fileName = "Database/t20_world_cup_save.txt";
     else
         fileName = "Database/tournament_save.txt";
-    
-    
-    
+
     stringstream buffer;
 
     buffer << T.name << "\n";
@@ -1742,8 +1742,7 @@ void saveTournament(const Tournament &T) {
         }
     };
 
-    if (T.name == "Asia Cup"){
-
+    if (T.name == "Asia Cup") {
         saveTeams(T.qualifierA);
         saveTeams(T.qualifierB);
         saveTeams(T.platesemifinalists);
@@ -1752,30 +1751,21 @@ void saveTournament(const Tournament &T) {
         saveTeams(T.groupB);
         saveTeams(T.super4);
         saveTeams(T.finalists);
-
     }
-
-    else if (T.name == "Champions Trophy"){
-
+    else if (T.name == "Champions Trophy") {
         saveTeams(T.groupA);
         saveTeams(T.groupB);
         saveTeams(T.semifinalists);
         saveTeams(T.finalists);
-
     }
-
-    else if (T.name == "World Cup"){
-
+    else if (T.name == "World Cup") {
         saveTeams(T.qualifierA);
         saveTeams(T.qualifierB);
         saveTeams(T.super6);
         saveTeams(T.semifinalists);
         saveTeams(T.finalists);
-
     }
-
-    else if (T.name == "T20 World Cup"){
-
+    else if (T.name == "T20 World Cup") {
         saveTeams(T.groupA);
         saveTeams(T.groupB);
         saveTeams(T.groupC);
@@ -1784,32 +1774,31 @@ void saveTournament(const Tournament &T) {
         saveTeams(T.super8B);
         saveTeams(T.semifinalists);
         saveTeams(T.finalists);
-
     }
-
-    
 
     buffer << T.fixtures.size() << "\n";
     for (auto &f : T.fixtures) {
         buffer << f.first << "," << f.second << "\n";
     }
 
+    // ✅ Encrypt + convert to hex
+    string encoded = encryptToHex(buffer.str());
 
-    string encoded = encode(buffer.str());
+    ofstream file(fileName);
+    if (!file) {
+        cerr << "Error: Cannot open file for saving tournament.\n";
+        return;
+    }
 
-    ofstream file(fileName, ios::binary);
-    
     file << encoded;
-    
     file.close();
 
-    cout << "Tournament saved!\n";
-
+    cout << "Tournament saved successfully!\n";
 }
 
 
+
 Tournament loadTournament(const string &tournamentName) {
-    
     string fileName;
 
     if (tournamentName == "Asia Cup")
@@ -1823,33 +1812,29 @@ Tournament loadTournament(const string &tournamentName) {
     else
         fileName = "Database/tournament_save.txt";
 
-    ifstream file(fileName, ios::binary);
-    
-    string encoded;
-    
-    char c;
-    
-    while (file.get(c)) {
-        
-        encoded += c;
-    
+    ifstream file(fileName);
+    if (!file) {
+        cerr << "Error: Tournament save file not found.\n";
+        return Tournament();
     }
-    
+
+    string encoded((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
     file.close();
 
+    if (encoded.empty()) {
+        cerr << "Error: Save file is empty.\n";
+        return Tournament();
+    }
 
-    string decoded = decode(encoded);
-    
+    // ✅ Decrypt from hex
+    string decoded = decryptFromHex(encoded);
     stringstream buffer(decoded);
 
     Tournament T;
 
     getline(buffer, T.name);
-    
     getline(buffer, T.stage);
-    
     buffer >> T.currentMatch;
-    
     buffer >> T.finished;
 
     auto loadTeams = [&](vector<Team>& teams) {
@@ -1863,8 +1848,7 @@ Tournament loadTournament(const string &tournamentName) {
         }
     };
 
-    if (tournamentName == "Asia Cup"){
-
+    if (tournamentName == "Asia Cup") {
         loadTeams(T.qualifierA);
         loadTeams(T.qualifierB);
         loadTeams(T.platesemifinalists);
@@ -1873,30 +1857,21 @@ Tournament loadTournament(const string &tournamentName) {
         loadTeams(T.groupB);
         loadTeams(T.super4);
         loadTeams(T.finalists);
-
     }
-
-    else if (tournamentName == "Champions Trophy"){
-
+    else if (tournamentName == "Champions Trophy") {
         loadTeams(T.groupA);
         loadTeams(T.groupB);
         loadTeams(T.semifinalists);
         loadTeams(T.finalists);
-
     }
-
-    else if (tournamentName == "World Cup"){
-
+    else if (tournamentName == "World Cup") {
         loadTeams(T.qualifierA);
         loadTeams(T.qualifierB);
         loadTeams(T.super6);
         loadTeams(T.semifinalists);
         loadTeams(T.finalists);
-
     }
-
-    else if (tournamentName == "T20 World Cup"){
-
+    else if (tournamentName == "T20 World Cup") {
         loadTeams(T.groupA);
         loadTeams(T.groupB);
         loadTeams(T.groupC);
@@ -1905,15 +1880,10 @@ Tournament loadTournament(const string &tournamentName) {
         loadTeams(T.super8B);
         loadTeams(T.semifinalists);
         loadTeams(T.finalists);
-
     }
 
-    
-
     size_t fixtureCount;
-    
     buffer >> fixtureCount;
-    
     buffer.ignore();
 
     T.fixtures.clear();
@@ -1921,11 +1891,11 @@ Tournament loadTournament(const string &tournamentName) {
         string line;
         getline(buffer, line);
         size_t comma = line.find(',');
-        T.fixtures.push_back({line.substr(0, comma), line.substr(comma + 1)});
+        if (comma != string::npos)
+            T.fixtures.push_back({line.substr(0, comma), line.substr(comma + 1)});
     }
 
-    cout << "Tournament loaded!\n";
-    
+    cout << "Tournament loaded successfully!\n";
     return T;
-
 }
+

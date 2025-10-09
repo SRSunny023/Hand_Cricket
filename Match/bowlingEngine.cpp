@@ -72,7 +72,7 @@ void bowlDelivery(int &stamina, int &aiScore, int &aiWicket, int temperature, st
 
     cout << ballType << " Delivary Incoming With " << bowlSpeed << " km/h!\n";
 
-    pressToContinue();
+    pressToContinue(0);
     
     clearScreen();
 
@@ -101,7 +101,7 @@ void bowlDelivery(int &stamina, int &aiScore, int &aiWicket, int temperature, st
     handleLastShot(aiAfterRun, aiBeforeWicket, aiAfterWicket, lastShotChoosed);
     
     
-    pressToContinue();
+    pressToContinue(0);
 
 }
 
@@ -187,7 +187,7 @@ int bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, st
         
         cout << aiTeam << " Batting End! " << userTeam << " Need " << target << " Runs From " << ball << " Balls!\n";
         
-        pressToContinue();
+        pressToContinue(0);
         
         return bat(userTeam, aiTeam, ball, temperature, rain, pitch);
     
@@ -203,13 +203,13 @@ int bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, st
         
         cout << "Play Stopped Due To Rain\n";
         
-        pressToContinue();
+        pressToContinue(0);
         
         cout << "Match Abandoned! No Result.\n";
         
         resetMatch();
         
-        pressToContinue();
+        pressToContinue(0);
         
         return 4; // 4 Means Match Abandoned
     
@@ -227,7 +227,7 @@ int bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, st
         
         cout << "Play Stopped Due To Rain\n";
         
-        pressToContinue();
+        pressToContinue(0);
         
         cout << "Luckily! Rain Stopped And Play Continues...\n";
         
@@ -237,7 +237,7 @@ int bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, st
         
         cout << "Balls Reduced To " << ballReduced << " & Revised Target = " << targetReduced << "\n";
         
-        pressToContinue();
+        pressToContinue(0);
 
         playInnings(userTeam, aiTeam, aiScore, aiWicket, stamina, ballReduced, targetReduced, temperature, pitch, lastShotChoosed, true);
 
@@ -252,7 +252,7 @@ int bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, st
 
             resetMatch();
     
-            pressToContinue();
+            pressToContinue(0);
 
             return 3;
 
@@ -266,7 +266,7 @@ int bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, st
 
             resetMatch();
     
-            pressToContinue();
+            pressToContinue(0);
 
             return 2;
 
@@ -280,7 +280,7 @@ int bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, st
 
             resetMatch();
     
-            pressToContinue();
+            pressToContinue(0);
 
             return 1;
 
@@ -305,7 +305,7 @@ int bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, st
 
             resetMatch();
     
-            pressToContinue();
+            pressToContinue(0);
 
             return 3;
         
@@ -319,7 +319,7 @@ int bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, st
 
             resetMatch();
     
-            pressToContinue();
+            pressToContinue(0);
 
             return 2;
         
@@ -333,7 +333,7 @@ int bowl(string userTeam, string aiTeam, int ball, int temperature, int rain, st
 
             resetMatch();
     
-            pressToContinue();
+            pressToContinue(0);
 
             return 1;
         

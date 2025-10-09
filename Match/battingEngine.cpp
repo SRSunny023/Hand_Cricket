@@ -348,7 +348,7 @@ void playShot(int &stamina, int temparature, string bowlType, string pitch){
 
     cleanupSounds();
 
-    pressToContinue();
+    pressToContinue(0);
 
 }
 
@@ -377,7 +377,7 @@ void playInnings(int &temporaryBall, int ball, string userTeam, int &stamina, in
 
             cout << "Ops! You Have All Out, Your Batting Comes To End!\n\n";
 
-            pressToContinue();
+            pressToContinue(0);
 
             break;
 
@@ -387,7 +387,7 @@ void playInnings(int &temporaryBall, int ball, string userTeam, int &stamina, in
 
             cout << "Your Batting Comes To End!\n\n";
 
-            pressToContinue();
+            pressToContinue(0);
 
             break;
 
@@ -436,7 +436,7 @@ int bat(string userTeam, string aiTeam, int ball, int temparature, int rain, str
 
         cout << " Balls!\n";
 
-        pressToContinue();
+        pressToContinue(0);
 
         return bowl(userTeam, aiTeam, ball, temparature, rain, pitch);
 
@@ -450,7 +450,7 @@ int bat(string userTeam, string aiTeam, int ball, int temparature, int rain, str
 
             cout << "Play Stopped Due To Rain\n";
 
-            pressToContinue();
+            pressToContinue(0);
 
             cout << "Match Abandoned Due To Rain\n";
 
@@ -458,7 +458,7 @@ int bat(string userTeam, string aiTeam, int ball, int temparature, int rain, str
 
             resetMatch();
 
-            pressToContinue();
+            pressToContinue(0);
 
             return 4; // 4 Means Match Abandoned
 
@@ -470,7 +470,7 @@ int bat(string userTeam, string aiTeam, int ball, int temparature, int rain, str
 
             cout << "Play Stopped Due To Rain\n";
 
-            pressToContinue();
+            pressToContinue(0);
 
             cout << "Luckily! Rain Stopped And Play Continue...\n";
 
@@ -484,7 +484,7 @@ int bat(string userTeam, string aiTeam, int ball, int temparature, int rain, str
 
             cout << "Ball Reduced To " << ballReduced << " & Revised Target Is " << targetReduced << " \n";
 
-            pressToContinue();
+            pressToContinue(0);
 
             playInnings(temporaryBall, ballReduced, userTeam, stamina, temparature, pitch, targetFlag, targetReduced);
         
@@ -496,7 +496,7 @@ int bat(string userTeam, string aiTeam, int ball, int temparature, int rain, str
 
                 resetMatch();
 
-                pressToContinue();
+                pressToContinue(0);
 
                 return 1; // 1 Means User Win;
 
@@ -510,7 +510,7 @@ int bat(string userTeam, string aiTeam, int ball, int temparature, int rain, str
 
                 resetMatch();
 
-                pressToContinue();
+                pressToContinue(0);
 
                 return 2; // 2 Means Tied
 
@@ -524,7 +524,7 @@ int bat(string userTeam, string aiTeam, int ball, int temparature, int rain, str
 
                 resetMatch();
 
-                pressToContinue();
+                pressToContinue(0);
 
                 return 3; // 3 Means Tied
 
@@ -544,7 +544,7 @@ int bat(string userTeam, string aiTeam, int ball, int temparature, int rain, str
 
                 resetMatch();
 
-                pressToContinue();
+                pressToContinue(0);
 
                 return 1;
 
@@ -558,7 +558,7 @@ int bat(string userTeam, string aiTeam, int ball, int temparature, int rain, str
 
                 resetMatch();
 
-                pressToContinue();
+                pressToContinue(0);
 
                 return 2;
 
@@ -572,7 +572,7 @@ int bat(string userTeam, string aiTeam, int ball, int temparature, int rain, str
 
                 resetMatch();
 
-                pressToContinue();
+                pressToContinue(0);
 
                 return 3;
 

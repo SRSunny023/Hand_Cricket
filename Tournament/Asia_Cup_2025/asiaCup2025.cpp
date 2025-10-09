@@ -1,8 +1,7 @@
 #include "asiaCup2025.h"
 #include "../Engine/tournamentEngine.h"
-#include "../../Authentication/loginSystem.h"
 #include "../../Utility/utility.h"
-
+#include "../../Menu/main_menu.h"
 
 
 
@@ -23,37 +22,54 @@ using namespace std;
 
 
 
-
-
-
-/****************************************************************************************************/
-/* Structure Name: setupAsiaCup                                                                     */
-/****************************************************************************************************/
+/********************************************************************************/
+/* Function Name: setupAsiaCup                                                  */
+/*                                                                              */
+/* Returns      : Tournament                                                    */
+/*                                                                              */
+/* Note         : Initializes the Asia Cup tournament structure and fixtures    */
+/********************************************************************************/
 
 Tournament setupAsiaCup() {
-    
+
     Tournament T("Asia Cup", "QualifierA");
 
-    T.qualifierA = {Team("Nepal"),Team("HongKong"),Team("Qatar"),Team("SaudiArabia"),Team("Malaysia")};
-    T.qualifierB = {Team("Oman"),Team("UAE"),Team("Kuwait"),Team("Bahrain"),Team("Cambodia")};
+    T.qualifierA = {
+        Team("Nepal"), Team("HongKong"), Team("Qatar"),
+        Team("SaudiArabia"), Team("Malaysia")
+    };
 
+    T.qualifierB = {
+        Team("Oman"), Team("UAE"), Team("Kuwait"),
+        Team("Bahrain"), Team("Cambodia")
+    };
 
-    // Fixtures Qualifier A
-    T.fixtures.push_back({"Malaysia", "Nepal"});
-    T.fixtures.push_back({"HongKong", "Qatar"});
-    T.fixtures.push_back({"Nepal", "Qatar"});
-    T.fixtures.push_back({"Malaysia", "SaudiArabia"});
-    T.fixtures.push_back({"SaudiArabia", "HongKong"});
-    T.fixtures.push_back({"HongKong", "Nepal"});
-    T.fixtures.push_back({"Malaysia", "Qatar"});
-    T.fixtures.push_back({"Qatar", "SaudiArabia"});
-    T.fixtures.push_back({"Malaysia", "HongKong"});
-    T.fixtures.push_back({"SaudiArabia", "Nepal"});
+    T.fixtures = {
+        {"Malaysia", "Nepal"},
+        {"HongKong", "Qatar"},
+        {"Nepal", "Qatar"},
+        {"Malaysia", "SaudiArabia"},
+        {"SaudiArabia", "HongKong"},
+        {"HongKong", "Nepal"},
+        {"Malaysia", "Qatar"},
+        {"Qatar", "SaudiArabia"},
+        {"Malaysia", "HongKong"},
+        {"SaudiArabia", "Nepal"}
+    };
 
     return T;
 }
 
 
+
+/********************************************************************************/
+/* Function Name: resetTournamentAsiaCup                                        */
+/*                                                                              */
+/* Inputs       : string name                                                   */
+/* Returns      : Tournament                                                    */
+/*                                                                              */
+/* Note         : Resets and returns a new instance of the Asia Cup tournament  */
+/********************************************************************************/
 
 Tournament resetTournamentAsiaCup(const string &name) {
     
@@ -63,68 +79,262 @@ Tournament resetTournamentAsiaCup(const string &name) {
 
 
 
+/********************************************************************************/
+/* Function Name: printAsiaCupMenu                                              */
+/*                                                                              */
+/* Inputs       : Tournament &T, string userTeam, int ball                      */
+/* Returns      : None                                                          */
+/*                                                                              */
+/* Note         : Prints the Asia Cup main menu in styled format                */
+/********************************************************************************/
+
+void printAsiaCupMenu(const Tournament &T, const string &userTeam, int ball) {
+
+    clearScreen();
+
+    cout << "╔══════════════════════════════" << T.name << "══════════════════════════════╗\n\n";
+    
+    cout << "Your Team   : " << userTeam << "\n";
+    
+    cout << "Match Format: " << ball / 6 << " Overs\n\n";
+    
+    cout << "1. Play Next Match\n";
+    
+    cout << "2. View Fixtures\n";
+    
+    cout << "3. View Points Table\n";
+    
+    cout << "4. Reset Tournament\n";
+    
+    cout << "5. Back\n";
+    
+    cout << "\n╚══════════════════════════════" << T.name << "══════════════════════════════╝\n\n";
+
+}
 
 
 
-
-
-
-
+/********************************************************************************/
+/* Function Name: asiaCupMenu                                                   */
+/*                                                                              */
+/* Inputs       : string userTeam, int ball                                     */
+/* Returns      : None                                                          */
+/*                                                                              */
+/* Note         : Controls the Asia Cup 2025 tournament flow                    */
+/********************************************************************************/
 
 void asiaCupMenu(string userTeam, int ball) {
-    
-    int choice;
 
+    int choice;
+    
     static Tournament asia;
 
     ifstream fin("Database/asia_cup_save.txt");
-    string tournamentName;
-    if(fin >> tournamentName && !tournamentName.empty()){
-
-        fin.close();
-
-        asia = loadTournament("Asia Cup");
-
-        cout << "Loaded Previous Tournament!\n";
-
-        pressToContinue();
-
-    }
-    else{
-
-        asia = setupAsiaCup();
-
-    }
-
     
-    do {
+    string tournamentName;
+
+    if (fin >> tournamentName && !tournamentName.empty()) {
+        
+        fin.close();
+        
+        asia = loadTournament("Asia Cup");
         
         clearScreen();
-        
-        cout << "------------------" << asia.name << " Menu ------------------\n\n\n";
 
-        cout << "Your Team: " << userTeam << " \nOver: " << ball/6 << " Over!\n\n";
+        loadingScreen("Loading Previous Tournament Please Wait");
         
-        cout << "1. Play Next Match\n\n2. See Fixture\n\n3. See Points Table\n\n4. Reset\n\n5. Back\n\n";
+        cout << "Previous Tournament Loaded!\n";
         
+        speak("Previous tournament loaded!");
+        
+        if(!VOICE_ENABLED){
+
+            #ifdef _WIN32
+                sleepMS(2000);
+                while (_kbhit()) _getch();
+            #else
+                sleepIgnoreInput(2000);
+            #endif
+
+        }
+    
+    }
+    
+    else {
+        
+        asia = setupAsiaCup();
+    
+    }
+
+    bool running = true;
+
+    while (running) {
+
+        printAsiaCupMenu(asia, userTeam, ball);
+
         choice = getIntInput("Enter Your Choice: ");
 
-        switch(choice) {
-            
-            case 1: clearScreen(); playNextFixture(asia, userTeam, ball); pressToContinue(); saveTournament(asia); break;
-            
-            case 2: clearScreen(); showFixtures(asia); pressToContinue(); break;
-            
-            case 3: clearScreen(); showPointsTable(asia); pressToContinue(); break;
-            
-            case 4: clearScreen(); asia = resetTournamentAsiaCup(asia.name); cout << "Tournament Reset!\n"; pressToContinue(); break;
-            
-            case 5: clearScreen(); cout << "Returning...\n"; pressToContinue(); break;
-            
-            default: clearScreen(); cout << "Invalid choice!\n"; pressToContinue(); break;
-        
-        }
+        switch (choice) {
 
-    } while(choice != 5);
+            case 1: {
+                
+                clearScreen();
+
+                loadingScreen("Playing Next Match Please Wait!");
+
+                clearScreen();
+                
+                playNextFixture(asia, userTeam, ball);
+                
+                saveTournament(asia);
+                
+                if(!VOICE_ENABLED){
+
+                    pressToContinue(0);
+
+                }
+                
+                break;
+            
+            }
+
+            case 2: {
+                
+                clearScreen();
+                
+                loadingScreen("Loading Fixture Please Wait!");
+
+                cout << "Fixtures Loaded Successfully!\n";
+
+                cout << flush;
+
+                if(!VOICE_ENABLED){
+
+                    #ifdef _WIN32
+                        sleepMS(2000);
+                        while (_kbhit()) _getch();
+                    #else
+                        sleepIgnoreInput(2000);
+                    #endif
+
+                }
+                
+                speak("Fixtures Loaded Successfully!");
+
+                clearScreen();
+                
+                showFixtures(asia);
+                
+                if(!VOICE_ENABLED){
+
+                    pressToContinue(0);
+
+                }
+                
+                break;
+            
+            }
+
+            case 3: {
+                
+                clearScreen();
+
+                loadingScreen("Loading Points Table Please Wait!");
+
+                cout << "Points Table Loaded Successfully!\n";
+
+                cout << flush;
+
+                if(!VOICE_ENABLED){
+
+                    #ifdef _WIN32
+                        sleepMS(2000);
+                        while (_kbhit()) _getch();
+                    #else
+                        sleepIgnoreInput(2000);
+                    #endif
+
+                }
+                
+                speak("Points Table Loaded Successfully!");
+
+                clearScreen();
+                
+                showPointsTable(asia);
+                
+                if(!VOICE_ENABLED){
+
+                    pressToContinue(0);
+
+                }
+                
+                break;
+            
+            }
+
+            case 4: {
+                
+                clearScreen();
+                
+                asia = resetTournamentAsiaCup(asia.name);
+                
+                cout << "Tournament Reset Successfully!\n";
+                
+                speak("Tournament reset successful!");
+                
+                if(!VOICE_ENABLED){
+
+                    #ifdef _WIN32
+                        sleepMS(2000);
+                        while (_kbhit()) _getch();
+                    #else
+                        sleepIgnoreInput(2000);
+                    #endif
+
+                }
+                
+                break;
+            
+            }
+
+            case 5: {
+                
+                clearScreen();
+                
+                loadingScreen("Returning To Tournament Menu");
+                
+                speak("Returning to tournament menu!");
+                
+                if(!VOICE_ENABLED){
+
+                    #ifdef _WIN32
+                        sleepMS(2000);
+                        while (_kbhit()) _getch();
+                    #else
+                        sleepIgnoreInput(2000);
+                    #endif
+
+                }
+                
+                running = false;
+                
+                break;
+            
+            }
+
+            case -1:
+                
+                running = false;
+            
+                break;
+
+            default:
+                
+                feedback("Invalid Input! Choose Between 1 - 5!");
+                
+                break;
+        }
+    
+    }
 
 }

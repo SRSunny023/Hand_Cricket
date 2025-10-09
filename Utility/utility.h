@@ -2,14 +2,46 @@
 #define UTILITY_H
 
 
+#include <iostream>
 #include <string>
-#include <vector>
 using namespace std;
 
-int clearScreen();
-void pressToContinue();
-int getIntInput(const string &prompt);
-string getEmailInput(const string &prompt);
 
+extern bool VOICE_ENABLED;
+
+
+void sleepMS(int);
+
+
+int clearScreen();
+
+
+void pressToContinue(int);
+
+
+string getEmailInput(string);
+
+string getPasswordInput(const string &prompt);
+
+
+void loadingScreen(string);
+
+
+void exitWindow();
+
+
+void speak(string);
+
+
+int getIntInput(string);
+
+
+void loadConfig();
+
+
+void saveConfig(bool);
+
+
+void sleepIgnoreInput(int);
 
 #endif

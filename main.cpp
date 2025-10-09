@@ -1,5 +1,5 @@
-#include "Menu/menu.h"
-#include "Match/battingEngine.h"
+#include "utility.h"
+#include "authentication.h"
 
 
 
@@ -15,9 +15,9 @@ int main(){
 
     srand(time(NULL));
 
-    loadSounds();
+    loadConfig();
     
-    account_menu();
+    authenticationMenu();
 
     return 0;
 

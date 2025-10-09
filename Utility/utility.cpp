@@ -1,42 +1,69 @@
-#include <iostream>
 #include "utility.h"
+#include "authentication.h"
+
+
+
+#include <iostream>
+#include <cstdlib>
 #include <limits>
-#include <string>
+#include <fstream>
+
+
+
+// Cross-Platform Library Header
+
+#ifdef _WIN32
+    #include <windows.h>
+    #include <conio.h>
+#else
+    #include <unistd.h>
+    #include <termios.h>
+#endif
+
+
+
 using namespace std;
 
 
-/****************************************************************************************************/
-/* Function Name: pressToContinue                                                                   */
-/*                                                                                                  */
-/* Inputs       : None                                                                              */
-/*                                                                                                  */
-/* Returns      : Non                                                                               */
-/*                                                                                                  */
-/* Note         : This Function Tells User To Press Any Key To Continue The Program                 */
-/****************************************************************************************************/
+bool VOICE_ENABLED = true;
 
-void pressToContinue() {
-    
-    cout << "Press Enter to continue...";
-    
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-    
-    cin.get();
+
+
+
+/********************************************************************************/
+/* Function Name: sleepMS                                                       */
+/*                                                                              */
+/* Inputs       : Int                                                           */
+/*                                                                              */
+/* Returns      : None                                                          */
+/*                                                                              */
+/* Note         : This is sleep function which is Cross-Platform                */
+/********************************************************************************/
+
+void sleepMS(int miliseconds){
+
+    #ifdef _WIN32
+        Sleep(miliseconds);
+    #else
+        usleep(miliseconds * 1000);
+    #endif
 
 }
 
-/****************************************************************************************************/
-/* Function Name: clearScreen                                                                       */
-/*                                                                                                  */
-/* Inputs       : None                                                                              */
-/*                                                                                                  */
-/* Returns      : Non                                                                               */
-/*                                                                                                  */
-/* Note         : This Function Clear The Console Screen                                            */
-/****************************************************************************************************/
 
-int clearScreen() {
-    
+
+/********************************************************************************/
+/* Function Name: clearScreen                                                   */
+/*                                                                              */
+/* Inputs       : None                                                          */
+/*                                                                              */
+/* Returns      : Int                                                           */
+/*                                                                              */
+/* Note         : This will clear the console or terminal screen completely     */
+/********************************************************************************/
+
+int clearScreen(){
+
     #ifdef _WIN32
         system("cls");
     #else
@@ -48,38 +75,337 @@ int clearScreen() {
 
 
 
+/********************************************************************************/
+/* Function Name: pressToContinue                                               */
+/*                                                                              */
+/* Inputs       : None                                                          */
+/*                                                                              */
+/* Returns      : None                                                          */
+/*                                                                              */
+/* Note         : This will tell user to press to continue the game             */
+/********************************************************************************/
 
-/****************************************************************************************************/
-/* Function Name: getIntInput                                                                       */
-/*                                                                                                  */
-/* Inputs       : const string                                                                      */
-/*                                                                                                  */
-/* Returns      : Int                                                                               */
-/*                                                                                                  */
-/* Note         : This Function Takes Only Integer Input Other Input Is Invalid                     */
-/****************************************************************************************************/
+void pressToContinue(int a){
 
-int getIntInput(const string &prompt) {
+    cout << "Enter Any Key To Continue... ";
+
+    speak("Enter Any Key To Continue");
+
+    if(a == 0){
+
+        cin.ignore();
+
+    }
+
+    cin.get();
+
+}
+
+
+
+/********************************************************************************/
+/* Function Name: getEmailInput                                                 */
+/*                                                                              */
+/* Inputs       : String                                                        */
+/*                                                                              */
+/* Returns      : String                                                        */
+/*                                                                              */
+/* Note         : This is Email Input Function                                  */
+/********************************************************************************/
+
+string getEmailInput(string prompt) {
     
-    string value;
+    string email;
     
-    while (true) {
+    string command;
+    
+    bool valid = false;
+
+    do{
         
         cout << prompt;
         
-        cin >> value;
+        speak(prompt);
+        
+        getline(cin, email);
 
-        if(value == "*"){
+        if (email == "*") exitWindow();
+        
+        if (email == "-") return email;
 
-            clearScreen();
+        email.erase(0, email.find_first_not_of(' '));
+        
+        email.erase(email.find_last_not_of(' ') + 1);
 
-            cout << "Program Exitted Successfully!\n\n";
+        if(email.find(' ') != string::npos){
             
-            exit(0);
-
+            command = "Invalid Email! No spaces allowed in email!";
+            
+            cout << command << endl;
+            
+            speak(command);
+            
+            continue;
+        
         }
 
-        else if(value == "/"){
+        size_t atPos = email.find('@');
+        
+        size_t atLastPos = email.rfind('@');
+        
+        if(atPos == string::npos || atPos != atLastPos){
+            
+            command = "Invalid Email! Only one @ allowed!";
+            
+            cout << command << endl;
+            
+            speak(command);
+            
+            continue;
+        
+        }
+
+        if(atPos == 0 || atPos == email.length() - 1){
+            
+            command = "Invalid Email! Must have something before and after @!";
+            
+            cout << command << endl;
+            
+            speak(command);
+            
+            continue;
+        
+        }
+
+        string domain = email.substr(atPos + 1);
+
+        size_t dotPos = domain.find('.');
+        
+        if(dotPos == string::npos){
+            
+            command = "Invalid Email! Must have at least one dot after @!";
+            
+            cout << command << endl;
+            
+            speak(command);
+            
+            continue;
+        
+        }
+
+        if(domain.front() == '.' || domain.back() == '.'){
+            
+            command = "Invalid Email! Dot cannot be the first or last character after @!";
+            
+            cout << command << endl;
+            
+            speak(command);
+            
+            continue;
+        
+        }
+
+        if(domain.find("..") != string::npos){
+            
+            command = "Invalid Email! Domain cannot contain consecutive dots!";
+            
+            cout << command << endl;
+            
+            speak(command);
+            
+            continue;
+        
+        }
+
+        size_t lastDot = domain.rfind('.');
+        
+        string tld = domain.substr(lastDot + 1);
+        
+        if(tld.length() < 2){
+            
+            command = "Invalid Email! Domain extension must be at least 2 characters (e.g., .com, .org)";
+            
+            cout << command << endl;
+            
+            speak(command);
+            
+            continue;
+        
+        }
+
+        valid = true;
+
+    } while (!valid);
+
+    return email;
+
+}
+
+
+
+
+/********************************************************************************/
+/* Function Name: getPasswordInput                                              */
+/*                                                                              */
+/* Inputs       : String                                                        */
+/*                                                                              */
+/* Returns      : String                                                        */
+/*                                                                              */
+/* Note         : This is Password Input Function                               */
+/********************************************************************************/
+
+string getPasswordInput(const string &prompt){
+    
+    string password;
+    
+    char ch;
+
+    cout << prompt;
+
+    speak(prompt);
+    
+    cout.flush();
+
+#ifdef _WIN32
+    
+    while (true) {
+        
+        ch = _getch();
+
+        if(ch == '\r' || ch == '\n'){
+            
+            cout << endl;
+            
+            break;
+        
+        }
+        
+        else if (ch == 8){
+            
+            if(!password.empty()){
+                
+                cout << "\b \b";
+                
+                password.pop_back();
+            
+            }
+        }
+        
+        else{
+            
+            password.push_back(ch);
+            
+            cout << '*';
+        
+        }
+    
+    }
+
+#else
+
+    struct termios oldt, newt;
+
+    tcgetattr(STDIN_FILENO, &oldt);
+
+    newt = oldt;
+
+    newt.c_lflag &= ~(ECHO | ICANON);
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
+    while(true){
+        
+        ch = getchar();
+
+        if(ch == '\n' || ch == '\r'){
+            
+            cout << endl;
+            
+            break;
+        
+        }
+        
+        else if(ch == 127 || ch == 8){
+            
+            if(!password.empty()){
+                
+                cout << "\b \b";
+                
+                password.pop_back();
+            
+            }
+        
+        }
+        
+        else{
+            
+            password.push_back(ch);
+            
+            cout << '*';
+            
+            cout.flush();
+        
+        }
+    
+    }
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+
+#endif
+
+    if(password == "*"){
+        
+        exitWindow();
+    
+    }
+
+    if(password == "-"){
+
+        return password;
+
+    }
+
+    if(password.length() < 8){
+        
+        cout << "Invalid Password! Must be at least 8 characters!" << endl;
+
+        speak("Invalid Password! Must be at least 8 characters!");
+        
+        return getPasswordInput(prompt);
+    
+    }
+
+    return password;
+
+}
+
+
+
+/********************************************************************************/
+/* Function Name: getIntInput                                                   */
+/*                                                                              */
+/* Inputs       : String                                                        */
+/*                                                                              */
+/* Returns      : Int                                                           */
+/*                                                                              */
+/* Note         : This is Password Input Function                               */
+/********************************************************************************/
+
+int getIntInput(string prompt) {
+    
+    string value;
+    
+    while(true){
+        
+        cout << prompt;
+
+        speak(prompt);
+        
+        cin >> value;
+
+        if(value == "*")    exitWindow();
+
+        else if(value == "-"){
 
             return -1;
 
@@ -94,6 +420,7 @@ int getIntInput(const string &prompt) {
                 if(!isdigit(c)){
 
                     isNumber = false;
+                    
                     break;
 
                 }
@@ -108,7 +435,9 @@ int getIntInput(const string &prompt) {
 
             else{
 
-                cout << "Invalid Input! Please Enter A Number, * to Exit, or / to go back!\n";
+                cout << "Invalid Input! Please Enter A Number, * to Exit, or - to go back!\n";
+
+                speak("Invalid Input! Please Enter A Number, * to Exit, or - to go back!");
 
             }
 
@@ -120,123 +449,198 @@ int getIntInput(const string &prompt) {
 
 
 
+/********************************************************************************/
+/* Function Name: loadingScreen                                                 */
+/*                                                                              */
+/* Inputs       : String                                                        */
+/*                                                                              */
+/* Returns      : None                                                          */
+/*                                                                              */
+/* Note         : This is Loading Function Which Will Show The Loading Animation*/
+/********************************************************************************/
 
+void loadingScreen(string prompt){
 
+    int x = 0;
 
+    speak(prompt);
 
+    do{
 
-/****************************************************************************************************/
-/* Function Name: getIntInput                                                                       */
-/*                                                                                                  */
-/* Inputs       : const string                                                                      */
-/*                                                                                                  */
-/* Returns      : Int                                                                               */
-/*                                                                                                  */
-/* Note         : This Function Takes Only Integer Input Other Input Is Invalid                     */
-/****************************************************************************************************/
-
-string getEmailInput(const string &prompt) {
-    
-    string value;
-    
-    while (true) {
-        
         clearScreen();
 
-        cout << "----------------------------------------------------------------------------\n";
-        cout << "|                               Registration                               |\n";
-        cout << "----------------------------------------------------------------------------\n";
+        cout << prompt << endl << endl << endl;
+
+        for(int i=0; i<=x; i++){
+
+            cout << "█";
+
+        }
+
+        cout << flush;
+
+        sleepMS(50);
         
-        int atTheRate = 0;
-        int atTheRateIndex = -1;
-        bool atTheRateOk = false;
-        int dot = 0;
-        int dotIndex = 0;
-        bool dotFlag = false;
+        x++;
+
+    }   while(x!=50);
+
+    cout << endl << endl << endl;
+
+}
+
+
+
+/********************************************************************************/
+/* Function Name: exitWindow                                                    */
+/*                                                                              */
+/* Inputs       : None                                                          */
+/*                                                                              */
+/* Returns      : None                                                          */
+/*                                                                              */
+/* Note         : This is the exit function. This Will Terminate The Program    */
+/********************************************************************************/
+
+void exitWindow(){
+
+    clearScreen();
+
+    loadingScreen("Game Exitting In Progress...");
+
+    cout << "Game Successfully Exitted!" << endl;
+
+    speak("Game Successfully Exitted!");
+
+    exit(0);
+
+}
+
+
+
+/********************************************************************************/
+/* Function Name: speak                                                         */
+/*                                                                              */
+/* Inputs       : String                                                        */
+/*                                                                              */
+/* Returns      : None                                                          */
+/*                                                                              */
+/* Note         : This is convert Text To Speech Which is Cross Platform        */
+/********************************************************************************/
+
+void speak(string text){
+
+    if(!VOICE_ENABLED) return;
+    
+    #ifdef _WIN32
+
+        string command = "PowerShell -Command \"Add-Type -AssemblyName System.Speech; "
+                         "(New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak('" + text + "');\"";
         
+        system(command.c_str());
 
-        cout << prompt;
+    #else
+
+        string command = "espeak \"" + text + "\"";
         
-        cin >> value;
+        system(command.c_str());
+    
+    #endif
 
-        if(value == "*"){
+}
 
-            clearScreen();
 
-            cout << "Program Exitted Successfully!\n\n";
-            
-            exit(0);
 
-        }
+/********************************************************************************/
+/* Function Name: voiceSetting                                                  */
+/*                                                                              */
+/* Inputs       : None                                                          */
+/*                                                                              */
+/* Returns      : None                                                          */
+/*                                                                              */
+/* Note         : This is Turn On And Turn Off Voice                            */
+/********************************************************************************/
 
-        else if(value == "/"){
+void loadConfig(){
 
-            return value;
+    ifstream file("Database/config.txt");
 
-        }
+    if (!file.is_open()) return;
+
+    string line;
+
+    if(getline(file, line)){
         
-        char ch;
-
-        for(int i=0; i < value.length(); i++){
-
-            ch = value[i];
-
-            if(ch == '@'){
-
-                atTheRate++;
-                atTheRateIndex = i;
-
-            }
-
-            if(ch == '.' && i > atTheRateIndex+1){
-
-                dot++;
-                dotIndex = i;
-
-            }
-
-        }
-
-        if(atTheRate == 1 && atTheRateIndex >= 2){
-
-            atTheRateOk = true;
-
-        }
-
-        if(dot == 1 && dotIndex > atTheRateIndex+1){
-
-            int len = value.length();
-
-            if(len > dotIndex+1)
-            
-                dotFlag = true;
-
-        }
-
-        if(atTheRateOk == true && dotFlag == true){
-
-            return value;
-
-        }
-
-        else{
-
-            clearScreen();
-            
-            cout << "Wrong Input!\n\n";
-
-            cout << "Correct Form : yy@yyy.yyy\n\n";
-
-            cout << "before @ there must me minimum 2 letters or digits\n\n";
-
-            cout << "Loading...Enter Any Key!... ";
-
-            cin.ignore();
-
-            cin.get();
-
-        }
+        string decrypted = decryptFromHex(line);
+        
+        VOICE_ENABLED = (decrypted == "1");
     
     }
 
+    file.close();
+
 }
+
+
+
+
+
+
+
+
+/********************************************************************************/
+/* Function Name: saveVoiceConfig                                               */
+/*                                                                              */
+/* Inputs       : Bool                                                          */
+/*                                                                              */
+/* Returns      : None                                                          */
+/*                                                                              */
+/* Note         : This will save the voice configuration in a text file         */
+/********************************************************************************/
+
+void saveConfig(bool voiceCheck){
+
+    ofstream file("Database/config.txt", ios::trunc);
+    
+    if (!file.is_open()) return;
+
+
+    file << encryptToHex(voiceCheck ? "1" : "0") << endl;
+
+
+    file.close();
+
+}
+
+
+
+/********************************************************************************/
+/* Function Name: sleepIgnoreInput                                              */
+/*                                                                              */
+/* Inputs       : int                                                           */
+/*                                                                              */
+/* Returns      : None                                                          */
+/*                                                                              */
+/* Note         : This will block input during sleep in ubuntu                  */
+/********************************************************************************/
+#ifndef _WIN32
+
+void sleepIgnoreInput(int ms) {
+    
+    struct termios oldt, newt;
+    
+    tcgetattr(STDIN_FILENO, &oldt);
+    
+    newt = oldt;
+
+    newt.c_lflag &= ~(ICANON | ECHO);
+    
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
+    usleep(ms * 1000);
+
+    tcflush(STDIN_FILENO, TCIFLUSH);
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+}
+
+#endif
